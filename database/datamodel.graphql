@@ -1,0 +1,14 @@
+type Document {
+  id: ID! @unique
+  createdAt: DateTime!
+  name: String
+  createdBy: User
+}
+
+type User {
+  id: ID! @unique
+  name: String!
+  email: String!
+  password: String!
+  documents: [Document!]!
+}
