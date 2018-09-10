@@ -1,12 +1,14 @@
-# import Document from "./generated/prisma.graphql"
+# import Document, Section from "./generated/prisma.graphql"
 
 type Query {
   info: String!
   documentFeed: [Document!]!
+  allUsers: [User!]!
 }
 
 type Mutation {
   postDocument(name: String): Document!
+  postSection(name: String, belongsTo: ID): Section!
   updateDocument(id: ID!, name: String): Document!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload

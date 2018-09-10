@@ -1,7 +1,11 @@
 # source: https://us1.prisma.sh/heath-dunlop-37e897/doc_gen_db/dev
-# timestamp: Fri Sep 07 2018 15:29:22 GMT+1200 (NZST)
+# timestamp: Mon Sep 10 2018 15:34:39 GMT+1200 (NZST)
 
 type AggregateDocument {
+  count: Int!
+}
+
+type AggregateSection {
   count: Int!
 }
 
@@ -21,6 +25,7 @@ type Document implements Node {
   createdAt: DateTime!
   name: String
   createdBy(where: UserWhereInput): User
+  sections(where: SectionWhereInput, orderBy: SectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Section!]
 }
 
 """A connection to a list of items."""
@@ -36,6 +41,7 @@ type DocumentConnection {
 input DocumentCreateInput {
   name: String
   createdBy: UserCreateOneWithoutDocumentsInput
+  sections: SectionCreateManyWithoutBelongsToInput
 }
 
 input DocumentCreateManyWithoutCreatedByInput {
@@ -43,8 +49,19 @@ input DocumentCreateManyWithoutCreatedByInput {
   connect: [DocumentWhereUniqueInput!]
 }
 
+input DocumentCreateOneWithoutSectionsInput {
+  create: DocumentCreateWithoutSectionsInput
+  connect: DocumentWhereUniqueInput
+}
+
 input DocumentCreateWithoutCreatedByInput {
   name: String
+  sections: SectionCreateManyWithoutBelongsToInput
+}
+
+input DocumentCreateWithoutSectionsInput {
+  name: String
+  createdBy: UserCreateOneWithoutDocumentsInput
 }
 
 """An edge in a connection."""
@@ -115,6 +132,7 @@ input DocumentSubscriptionWhereInput {
 input DocumentUpdateInput {
   name: String
   createdBy: UserUpdateOneWithoutDocumentsInput
+  sections: SectionUpdateManyWithoutBelongsToInput
 }
 
 input DocumentUpdateManyWithoutCreatedByInput {
@@ -126,13 +144,33 @@ input DocumentUpdateManyWithoutCreatedByInput {
   upsert: [DocumentUpsertWithWhereUniqueWithoutCreatedByInput!]
 }
 
+input DocumentUpdateOneWithoutSectionsInput {
+  create: DocumentCreateWithoutSectionsInput
+  connect: DocumentWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: DocumentUpdateWithoutSectionsDataInput
+  upsert: DocumentUpsertWithoutSectionsInput
+}
+
 input DocumentUpdateWithoutCreatedByDataInput {
   name: String
+  sections: SectionUpdateManyWithoutBelongsToInput
+}
+
+input DocumentUpdateWithoutSectionsDataInput {
+  name: String
+  createdBy: UserUpdateOneWithoutDocumentsInput
 }
 
 input DocumentUpdateWithWhereUniqueWithoutCreatedByInput {
   where: DocumentWhereUniqueInput!
   data: DocumentUpdateWithoutCreatedByDataInput!
+}
+
+input DocumentUpsertWithoutSectionsInput {
+  update: DocumentUpdateWithoutSectionsDataInput!
+  create: DocumentCreateWithoutSectionsInput!
 }
 
 input DocumentUpsertWithWhereUniqueWithoutCreatedByInput {
@@ -253,6 +291,9 @@ input DocumentWhereInput {
   """All values not ending with the given string."""
   name_not_ends_with: String
   createdBy: UserWhereInput
+  sections_every: SectionWhereInput
+  sections_some: SectionWhereInput
+  sections_none: SectionWhereInput
 }
 
 input DocumentWhereUniqueInput {
@@ -267,16 +308,22 @@ scalar Long
 
 type Mutation {
   createDocument(data: DocumentCreateInput!): Document!
+  createSection(data: SectionCreateInput!): Section!
   createUser(data: UserCreateInput!): User!
   updateDocument(data: DocumentUpdateInput!, where: DocumentWhereUniqueInput!): Document
+  updateSection(data: SectionUpdateInput!, where: SectionWhereUniqueInput!): Section
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteDocument(where: DocumentWhereUniqueInput!): Document
+  deleteSection(where: SectionWhereUniqueInput!): Section
   deleteUser(where: UserWhereUniqueInput!): User
   upsertDocument(where: DocumentWhereUniqueInput!, create: DocumentCreateInput!, update: DocumentUpdateInput!): Document!
+  upsertSection(where: SectionWhereUniqueInput!, create: SectionCreateInput!, update: SectionUpdateInput!): Section!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyDocuments(data: DocumentUpdateInput!, where: DocumentWhereInput): BatchPayload!
+  updateManySections(data: SectionUpdateInput!, where: SectionWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   deleteManyDocuments(where: DocumentWhereInput): BatchPayload!
+  deleteManySections(where: SectionWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -309,10 +356,13 @@ type PageInfo {
 
 type Query {
   documents(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Document]!
+  sections(where: SectionWhereInput, orderBy: SectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Section]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   document(where: DocumentWhereUniqueInput!): Document
+  section(where: SectionWhereUniqueInput!): Section
   user(where: UserWhereUniqueInput!): User
   documentsConnection(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentConnection!
+  sectionsConnection(where: SectionWhereInput, orderBy: SectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SectionConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -322,8 +372,258 @@ type Query {
   ): Node
 }
 
+type Section implements Node {
+  id: ID!
+  createdAt: DateTime!
+  name: String
+  createdBy(where: UserWhereInput): User
+  belongsTo(where: DocumentWhereInput): Document
+}
+
+"""A connection to a list of items."""
+type SectionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [SectionEdge]!
+  aggregate: AggregateSection!
+}
+
+input SectionCreateInput {
+  name: String
+  createdBy: UserCreateOneInput
+  belongsTo: DocumentCreateOneWithoutSectionsInput
+}
+
+input SectionCreateManyWithoutBelongsToInput {
+  create: [SectionCreateWithoutBelongsToInput!]
+  connect: [SectionWhereUniqueInput!]
+}
+
+input SectionCreateWithoutBelongsToInput {
+  name: String
+  createdBy: UserCreateOneInput
+}
+
+"""An edge in a connection."""
+type SectionEdge {
+  """The item at the end of the edge."""
+  node: Section!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum SectionOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type SectionPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  name: String
+}
+
+type SectionSubscriptionPayload {
+  mutation: MutationType!
+  node: Section
+  updatedFields: [String!]
+  previousValues: SectionPreviousValues
+}
+
+input SectionSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SectionSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SectionSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SectionSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: SectionWhereInput
+}
+
+input SectionUpdateInput {
+  name: String
+  createdBy: UserUpdateOneInput
+  belongsTo: DocumentUpdateOneWithoutSectionsInput
+}
+
+input SectionUpdateManyWithoutBelongsToInput {
+  create: [SectionCreateWithoutBelongsToInput!]
+  connect: [SectionWhereUniqueInput!]
+  disconnect: [SectionWhereUniqueInput!]
+  delete: [SectionWhereUniqueInput!]
+  update: [SectionUpdateWithWhereUniqueWithoutBelongsToInput!]
+  upsert: [SectionUpsertWithWhereUniqueWithoutBelongsToInput!]
+}
+
+input SectionUpdateWithoutBelongsToDataInput {
+  name: String
+  createdBy: UserUpdateOneInput
+}
+
+input SectionUpdateWithWhereUniqueWithoutBelongsToInput {
+  where: SectionWhereUniqueInput!
+  data: SectionUpdateWithoutBelongsToDataInput!
+}
+
+input SectionUpsertWithWhereUniqueWithoutBelongsToInput {
+  where: SectionWhereUniqueInput!
+  update: SectionUpdateWithoutBelongsToDataInput!
+  create: SectionCreateWithoutBelongsToInput!
+}
+
+input SectionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [SectionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [SectionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [SectionWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  createdBy: UserWhereInput
+  belongsTo: DocumentWhereInput
+}
+
+input SectionWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   document(where: DocumentSubscriptionWhereInput): DocumentSubscriptionPayload
+  section(where: SectionSubscriptionWhereInput): SectionSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -350,6 +650,11 @@ input UserCreateInput {
   email: String!
   password: String!
   documents: DocumentCreateManyWithoutCreatedByInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutDocumentsInput {
@@ -433,11 +738,27 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  documents: DocumentUpdateManyWithoutCreatedByInput
+}
+
 input UserUpdateInput {
   name: String
   email: String
   password: String
   documents: DocumentUpdateManyWithoutCreatedByInput
+}
+
+input UserUpdateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
 }
 
 input UserUpdateOneWithoutDocumentsInput {
@@ -453,6 +774,11 @@ input UserUpdateWithoutDocumentsDataInput {
   name: String
   email: String
   password: String
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserUpsertWithoutDocumentsInput {

@@ -3,6 +3,15 @@ type Document {
   createdAt: DateTime!
   name: String
   createdBy: User
+  sections: [Section!]! @relation(name: "DocumentSections", onDelete: CASCADE)
+}
+
+type Section {
+  id: ID! @unique
+  createdAt: DateTime!
+  name: String
+  createdBy: User
+  belongsTo: Document @relation(name: "DocumentSections")
 }
 
 type User {
