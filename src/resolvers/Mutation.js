@@ -55,6 +55,20 @@ function postDocument(parent, args, context, info) {
       data: {
         name: args.name,
         createdBy: { connect: { id: userId } },
+        belongsTo: { connect: { id: userId } },
+      },
+    },
+    info
+  )
+}
+
+function postSection(parent, args, context, info) {
+  const userId = getUserId(context)
+  return context.db.mutation.createSection(
+    {
+      data: {
+        name: args.name,
+        createdBy: { connect: { id: userId } },
       },
     },
     info
@@ -65,4 +79,5 @@ module.exports = {
   signup,
   login,
   postDocument,
+  postSection,
 }
