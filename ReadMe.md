@@ -10,6 +10,8 @@
 
 ### DB Mutations
 
+###### create Document
+
 ```
 mutation {
   createDocument(data: {
@@ -25,6 +27,8 @@ mutation {
   }
 }
 ```
+
+###### create Section
 
 ```
 mutation {
