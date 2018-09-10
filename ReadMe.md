@@ -131,3 +131,15 @@ mutation {
 ### App Subscriptions
 
 ### DB Subscriptions
+
+# Source Material
+
+[The Fullstack Tutorial for GraphQL](https://www.howtographql.com/)
+
+[Build a GraphQL server with any database](https://www.prisma.io/)
+
+[Prisma File Handling](https://www.prisma.io/docs/reference/upgrade-guides/graphcool-to-prisma/file-handling-hahcee3eef/)
+
+[Prisma files example](https://github.com/prisma/prisma/tree/master/examples/archive/file-handling-s3)
+
+[Just use Yogo files?](https://github.com/prisma/graphql-yoga)
