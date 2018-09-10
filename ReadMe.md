@@ -26,6 +26,27 @@ mutation {
 }
 ```
 
+```
+mutation {
+  createSection(data: {
+    createdBy:{
+      connect: {
+        id: "cjlvr4enenesd0b52en666s98"
+      }
+    }
+    belongsTo:{
+      connect:{
+        id: "cjlvsupqpnj9b0b52nrsv5jvm"
+      }
+    }
+    name: "Here is a section for a document"
+  }) {
+    id
+    name
+  }
+}
+```
+
 ## SUBSCRIPTIONS
 
 ### App Subscriptions
