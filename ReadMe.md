@@ -1,3 +1,12 @@
+# Intro
+
+This is the spec for Doc Gen.
+We should be able to create documents.
+these documents will have sections.
+A Section will have a type e.g. => type: "h1" and also have a content e.g. "Document Title"
+
+# API
+
 ## QUERIES
 
 ### App Queries
