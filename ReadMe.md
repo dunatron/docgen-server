@@ -1,3 +1,15 @@
+## QUERIES
+
+### App Queries
+
+### DB Queries
+
+## MUTATIONS
+
+### App Mutations
+
+### DB Mutations
+
 ```
 mutation {
   createDocument(data: {
@@ -13,3 +25,9 @@ mutation {
   }
 }
 ```
+
+## SUBSCRIPTIONS
+
+### App Subscriptions
+
+### DB Subscriptions
