@@ -1,9 +1,31 @@
 # Intro
 
-This is the spec for Doc Gen.
-We should be able to create documents.
-these documents will have sections.
-A Section will have a type e.g. => type: "h1" and also have a content e.g. "Document Title"
+- This is the spec for Doc Gen.
+- We should be able to create documents.
+- these documents will have sections.
+- A Section will have a type e.g. => type: "h1" and also have a content e.g. "Document Title"
+
+###### tables discussion
+
+- Should we be using tables for markdown? It could be a good win if we can get it right.
+- Thoughts. The tables
+
+Colons can be used to align columns.
+
+| Tables        |      Are      |  Cool |
+| ------------- | :-----------: | ----: |
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      |   centered    |   $12 |
+| zebra stripes |   are neat    |    $1 |
+
+There must be at least 3 dashes separating each header cell.
+The outer pipes (|) are optional, and you don't need to make the
+raw Markdown line up prettily. You can also use inline Markdown.
+
+| Markdown | Less      | Pretty     |
+| -------- | --------- | ---------- |
+| _Still_  | `renders` | **nicely** |
+| 1        | 2         | 3          |
 
 # API
 
