@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/heath-dunlop-37e897/doc_gen_db/dev
-# timestamp: Mon Sep 10 2018 15:34:39 GMT+1200 (NZST)
+# timestamp: Thu Sep 13 2018 10:16:46 GMT+1200 (NZST)
 
 type AggregateDocument {
   count: Int!
@@ -962,4 +962,5 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }

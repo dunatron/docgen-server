@@ -83,6 +83,25 @@ mutation {
 }
 ```
 
+###### Login
+
+```
+mutation LoginMutation($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+    }
+  }
+```
+
+You will need to include variables
+
+```
+{
+"email": "testuser@test.com",
+"password": "test123"
+}
+```
+
 ### DB Mutations
 
 ###### create Document
