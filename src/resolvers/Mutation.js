@@ -3,6 +3,9 @@ const jwt = require("jsonwebtoken")
 const { APP_SECRET, getUserId } = require("../utils")
 
 async function signup(parent, args, context, info) {
+  if (args.email.length < 3) {
+    throw new Error("Email should have more than 3 characters")
+  }
   // 1
   const password = await bcrypt.hash(args.password, 10)
   // 2
@@ -54,8 +57,8 @@ function postDocument(parent, args, context, info) {
     {
       data: {
         name: args.name,
-        createdBy: { connect: { id: userId } },
-        belongsTo: { connect: { id: userId } },
+        // createdBy: { connect: { id: userId } },
+        // belongsTo: { connect: { id: userId } },
       },
     },
     info

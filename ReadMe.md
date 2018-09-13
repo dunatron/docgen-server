@@ -5,6 +5,14 @@
 - these documents will have sections.
 - A Section will have a type e.g. => type: "h1" and also have a content e.g. "Document Title"
 
+The Project will be a stand alone project and have it's own instance.
+This will allow us to accept data from both our v4 and v5 clients.
+There needs to be a way to accept data from v4.
+When setting up a Document/account?
+perhaps an account has like org details etc.
+A document can get its data from agreements?
+Something to shape how we get this data
+
 ###### tables discussion
 
 - Should we be using tables for markdown? It could be a good win if we can get it right.
@@ -49,6 +57,19 @@ query {
       id
       name
     }
+  }
+}
+```
+
+###### get Single Document
+
+```
+query {
+  document(where: {
+    id: "cjm005p2m67670b05tht8yzo4"
+  }) {
+    id
+    name
   }
 }
 ```

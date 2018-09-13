@@ -3,6 +3,7 @@
 type Query {
   info: String!
   documentFeed: [Document!]!
+  singleDocument: [Document]
   allUsers: [User!]!
 }
 
