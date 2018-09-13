@@ -1,8 +1,17 @@
+type Organisation {
+  id: ID! @unique
+  name: String
+  documents: [Document!]!
+    @relation(name: "OrganisationDocuments", onDelete: CASCADE)
+  users: [User!]!
+}
+
 type Document {
   id: ID! @unique
   createdAt: DateTime!
   name: String
   createdBy: User
+  createdFor: Organisation @relation(name: "OrganisationDocuments")
   sections: [Section!]! @relation(name: "DocumentSections", onDelete: CASCADE)
 }
 
@@ -20,4 +29,5 @@ type User {
   email: String! @unique
   password: String!
   documents: [Document!]!
+  organisations: [Organisation!]!
 }

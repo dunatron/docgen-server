@@ -91,6 +91,28 @@ query {
 
 ### App Mutations
 
+###### postDocument
+
+- The app will send the token with the logged in user to be associated with the document creation.
+- An organisation id is supplied so that a user could potentially create documents for different organisations
+
+```
+mutation PostMutation($name:String!){
+  postDocument(name: $name, orgId: "cjm14c2tc8xgx0b05cc5xrp51") {
+    name
+    createdAt
+    createdFor {
+      name
+    }
+    createdBy {
+      email
+      name
+      id
+    }
+  }
+}
+```
+
 ###### signup/create user
 
 ```
@@ -130,15 +152,24 @@ You will need to include variables
 ```
 mutation {
   createDocument(data: {
+    name: "Here is the First Document For Nomos"
     createdBy:{
       connect: {
-        id: "cjlvr4enenesd0b52en666s98"
+        id:"cjlvr4enenesd0b52en666s98"
       }
     }
-    name: "Shape it like this. But pass in flat args. Makes sense"
+    createdFor:{
+      connect:{
+        id:"cjm14c2tc8xgx0b05cc5xrp51"
+      }
+    }
   }) {
-    id
     name
+    id
+    sections {
+      id
+      name
+    }
   }
 }
 ```
@@ -183,3 +214,7 @@ mutation {
 [Prisma files example](https://github.com/prisma/prisma/tree/master/examples/archive/file-handling-s3)
 
 [Just use Yogo files?](https://github.com/prisma/graphql-yoga)
+
+# DOCS
+
+- https://www.prisma.io/docs/prisma-graphql-api/using-the-prisma-api-nms2/

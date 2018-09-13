@@ -57,8 +57,8 @@ function postDocument(parent, args, context, info) {
     {
       data: {
         name: args.name,
-        // createdBy: { connect: { id: userId } },
-        // belongsTo: { connect: { id: userId } },
+        createdBy: { connect: { id: userId } },
+        createdFor: { connect: { id: args.orgId } },
       },
     },
     info
