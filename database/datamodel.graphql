@@ -12,15 +12,19 @@ type Document {
   name: String
   createdBy: User
   createdFor: Organisation @relation(name: "OrganisationDocuments")
+  config: DocumentConfig
+  tags: [Tag!]!
   sections: [Section!]! @relation(name: "DocumentSections", onDelete: CASCADE)
 }
 
 type Section {
   id: ID! @unique
   createdAt: DateTime!
-  name: String
   createdBy: User
   belongsTo: Document @relation(name: "DocumentSections")
+  type: String
+  rawContent: Json
+  position: Int
 }
 
 type User {
@@ -30,4 +34,17 @@ type User {
   password: String!
   documents: [Document!]!
   organisations: [Organisation!]!
+}
+
+type DocumentConfig {
+  id: ID! @unique
+  dataUrl: String
+  params: Json
+  belongsTo: Document!
+}
+
+type Tag {
+  id: ID! @unique
+  name: String! @unique
+  documents: [Document!]!
 }

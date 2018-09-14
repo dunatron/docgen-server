@@ -72,6 +72,7 @@ function postSection(parent, args, context, info) {
       data: {
         name: args.name,
         createdBy: { connect: { id: userId } },
+        belongsTo: { connect: { id: args.belongsTo } },
       },
     },
     info

@@ -1,7 +1,11 @@
 # source: https://us1.prisma.sh/heath-dunlop-37e897/doc_gen_db/dev
-# timestamp: Fri Sep 14 2018 10:09:04 GMT+1200 (NZST)
+# timestamp: Fri Sep 14 2018 12:38:43 GMT+1200 (NZST)
 
 type AggregateDocument {
+  count: Int!
+}
+
+type AggregateDocumentConfig {
   count: Int!
 }
 
@@ -10,6 +14,10 @@ type AggregateOrganisation {
 }
 
 type AggregateSection {
+  count: Int!
+}
+
+type AggregateTag {
   count: Int!
 }
 
@@ -30,7 +38,230 @@ type Document implements Node {
   name: String
   createdBy(where: UserWhereInput): User
   createdFor(where: OrganisationWhereInput): Organisation
+  config(where: DocumentConfigWhereInput): DocumentConfig
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   sections(where: SectionWhereInput, orderBy: SectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Section!]
+}
+
+type DocumentConfig implements Node {
+  id: ID!
+  dataUrl: String
+  params: Json
+  belongsTo(where: DocumentWhereInput): Document!
+}
+
+"""A connection to a list of items."""
+type DocumentConfigConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [DocumentConfigEdge]!
+  aggregate: AggregateDocumentConfig!
+}
+
+input DocumentConfigCreateInput {
+  dataUrl: String
+  params: Json
+  belongsTo: DocumentCreateOneWithoutConfigInput!
+}
+
+input DocumentConfigCreateOneWithoutBelongsToInput {
+  create: DocumentConfigCreateWithoutBelongsToInput
+  connect: DocumentConfigWhereUniqueInput
+}
+
+input DocumentConfigCreateWithoutBelongsToInput {
+  dataUrl: String
+  params: Json
+}
+
+"""An edge in a connection."""
+type DocumentConfigEdge {
+  """The item at the end of the edge."""
+  node: DocumentConfig!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum DocumentConfigOrderByInput {
+  id_ASC
+  id_DESC
+  dataUrl_ASC
+  dataUrl_DESC
+  params_ASC
+  params_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type DocumentConfigPreviousValues {
+  id: ID!
+  dataUrl: String
+  params: Json
+}
+
+type DocumentConfigSubscriptionPayload {
+  mutation: MutationType!
+  node: DocumentConfig
+  updatedFields: [String!]
+  previousValues: DocumentConfigPreviousValues
+}
+
+input DocumentConfigSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DocumentConfigSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DocumentConfigSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DocumentConfigSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DocumentConfigWhereInput
+}
+
+input DocumentConfigUpdateInput {
+  dataUrl: String
+  params: Json
+  belongsTo: DocumentUpdateOneRequiredWithoutConfigInput
+}
+
+input DocumentConfigUpdateOneWithoutBelongsToInput {
+  create: DocumentConfigCreateWithoutBelongsToInput
+  connect: DocumentConfigWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: DocumentConfigUpdateWithoutBelongsToDataInput
+  upsert: DocumentConfigUpsertWithoutBelongsToInput
+}
+
+input DocumentConfigUpdateWithoutBelongsToDataInput {
+  dataUrl: String
+  params: Json
+}
+
+input DocumentConfigUpsertWithoutBelongsToInput {
+  update: DocumentConfigUpdateWithoutBelongsToDataInput!
+  create: DocumentConfigCreateWithoutBelongsToInput!
+}
+
+input DocumentConfigWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DocumentConfigWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DocumentConfigWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DocumentConfigWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  dataUrl: String
+
+  """All values that are not equal to given value."""
+  dataUrl_not: String
+
+  """All values that are contained in given list."""
+  dataUrl_in: [String!]
+
+  """All values that are not contained in given list."""
+  dataUrl_not_in: [String!]
+
+  """All values less than the given value."""
+  dataUrl_lt: String
+
+  """All values less than or equal the given value."""
+  dataUrl_lte: String
+
+  """All values greater than the given value."""
+  dataUrl_gt: String
+
+  """All values greater than or equal the given value."""
+  dataUrl_gte: String
+
+  """All values containing the given string."""
+  dataUrl_contains: String
+
+  """All values not containing the given string."""
+  dataUrl_not_contains: String
+
+  """All values starting with the given string."""
+  dataUrl_starts_with: String
+
+  """All values not starting with the given string."""
+  dataUrl_not_starts_with: String
+
+  """All values ending with the given string."""
+  dataUrl_ends_with: String
+
+  """All values not ending with the given string."""
+  dataUrl_not_ends_with: String
+  belongsTo: DocumentWhereInput
+}
+
+input DocumentConfigWhereUniqueInput {
+  id: ID
 }
 
 """A connection to a list of items."""
@@ -47,6 +278,8 @@ input DocumentCreateInput {
   name: String
   createdBy: UserCreateOneWithoutDocumentsInput
   createdFor: OrganisationCreateOneWithoutDocumentsInput
+  config: DocumentConfigCreateOneWithoutBelongsToInput
+  tags: TagCreateManyWithoutDocumentsInput
   sections: SectionCreateManyWithoutBelongsToInput
 }
 
@@ -60,20 +293,42 @@ input DocumentCreateManyWithoutCreatedForInput {
   connect: [DocumentWhereUniqueInput!]
 }
 
+input DocumentCreateManyWithoutTagsInput {
+  create: [DocumentCreateWithoutTagsInput!]
+  connect: [DocumentWhereUniqueInput!]
+}
+
+input DocumentCreateOneWithoutConfigInput {
+  create: DocumentCreateWithoutConfigInput
+  connect: DocumentWhereUniqueInput
+}
+
 input DocumentCreateOneWithoutSectionsInput {
   create: DocumentCreateWithoutSectionsInput
   connect: DocumentWhereUniqueInput
 }
 
+input DocumentCreateWithoutConfigInput {
+  name: String
+  createdBy: UserCreateOneWithoutDocumentsInput
+  createdFor: OrganisationCreateOneWithoutDocumentsInput
+  tags: TagCreateManyWithoutDocumentsInput
+  sections: SectionCreateManyWithoutBelongsToInput
+}
+
 input DocumentCreateWithoutCreatedByInput {
   name: String
   createdFor: OrganisationCreateOneWithoutDocumentsInput
+  config: DocumentConfigCreateOneWithoutBelongsToInput
+  tags: TagCreateManyWithoutDocumentsInput
   sections: SectionCreateManyWithoutBelongsToInput
 }
 
 input DocumentCreateWithoutCreatedForInput {
   name: String
   createdBy: UserCreateOneWithoutDocumentsInput
+  config: DocumentConfigCreateOneWithoutBelongsToInput
+  tags: TagCreateManyWithoutDocumentsInput
   sections: SectionCreateManyWithoutBelongsToInput
 }
 
@@ -81,6 +336,16 @@ input DocumentCreateWithoutSectionsInput {
   name: String
   createdBy: UserCreateOneWithoutDocumentsInput
   createdFor: OrganisationCreateOneWithoutDocumentsInput
+  config: DocumentConfigCreateOneWithoutBelongsToInput
+  tags: TagCreateManyWithoutDocumentsInput
+}
+
+input DocumentCreateWithoutTagsInput {
+  name: String
+  createdBy: UserCreateOneWithoutDocumentsInput
+  createdFor: OrganisationCreateOneWithoutDocumentsInput
+  config: DocumentConfigCreateOneWithoutBelongsToInput
+  sections: SectionCreateManyWithoutBelongsToInput
 }
 
 """An edge in a connection."""
@@ -152,6 +417,8 @@ input DocumentUpdateInput {
   name: String
   createdBy: UserUpdateOneWithoutDocumentsInput
   createdFor: OrganisationUpdateOneWithoutDocumentsInput
+  config: DocumentConfigUpdateOneWithoutBelongsToInput
+  tags: TagUpdateManyWithoutDocumentsInput
   sections: SectionUpdateManyWithoutBelongsToInput
 }
 
@@ -173,6 +440,22 @@ input DocumentUpdateManyWithoutCreatedForInput {
   upsert: [DocumentUpsertWithWhereUniqueWithoutCreatedForInput!]
 }
 
+input DocumentUpdateManyWithoutTagsInput {
+  create: [DocumentCreateWithoutTagsInput!]
+  connect: [DocumentWhereUniqueInput!]
+  disconnect: [DocumentWhereUniqueInput!]
+  delete: [DocumentWhereUniqueInput!]
+  update: [DocumentUpdateWithWhereUniqueWithoutTagsInput!]
+  upsert: [DocumentUpsertWithWhereUniqueWithoutTagsInput!]
+}
+
+input DocumentUpdateOneRequiredWithoutConfigInput {
+  create: DocumentCreateWithoutConfigInput
+  connect: DocumentWhereUniqueInput
+  update: DocumentUpdateWithoutConfigDataInput
+  upsert: DocumentUpsertWithoutConfigInput
+}
+
 input DocumentUpdateOneWithoutSectionsInput {
   create: DocumentCreateWithoutSectionsInput
   connect: DocumentWhereUniqueInput
@@ -182,15 +465,27 @@ input DocumentUpdateOneWithoutSectionsInput {
   upsert: DocumentUpsertWithoutSectionsInput
 }
 
+input DocumentUpdateWithoutConfigDataInput {
+  name: String
+  createdBy: UserUpdateOneWithoutDocumentsInput
+  createdFor: OrganisationUpdateOneWithoutDocumentsInput
+  tags: TagUpdateManyWithoutDocumentsInput
+  sections: SectionUpdateManyWithoutBelongsToInput
+}
+
 input DocumentUpdateWithoutCreatedByDataInput {
   name: String
   createdFor: OrganisationUpdateOneWithoutDocumentsInput
+  config: DocumentConfigUpdateOneWithoutBelongsToInput
+  tags: TagUpdateManyWithoutDocumentsInput
   sections: SectionUpdateManyWithoutBelongsToInput
 }
 
 input DocumentUpdateWithoutCreatedForDataInput {
   name: String
   createdBy: UserUpdateOneWithoutDocumentsInput
+  config: DocumentConfigUpdateOneWithoutBelongsToInput
+  tags: TagUpdateManyWithoutDocumentsInput
   sections: SectionUpdateManyWithoutBelongsToInput
 }
 
@@ -198,6 +493,16 @@ input DocumentUpdateWithoutSectionsDataInput {
   name: String
   createdBy: UserUpdateOneWithoutDocumentsInput
   createdFor: OrganisationUpdateOneWithoutDocumentsInput
+  config: DocumentConfigUpdateOneWithoutBelongsToInput
+  tags: TagUpdateManyWithoutDocumentsInput
+}
+
+input DocumentUpdateWithoutTagsDataInput {
+  name: String
+  createdBy: UserUpdateOneWithoutDocumentsInput
+  createdFor: OrganisationUpdateOneWithoutDocumentsInput
+  config: DocumentConfigUpdateOneWithoutBelongsToInput
+  sections: SectionUpdateManyWithoutBelongsToInput
 }
 
 input DocumentUpdateWithWhereUniqueWithoutCreatedByInput {
@@ -208,6 +513,16 @@ input DocumentUpdateWithWhereUniqueWithoutCreatedByInput {
 input DocumentUpdateWithWhereUniqueWithoutCreatedForInput {
   where: DocumentWhereUniqueInput!
   data: DocumentUpdateWithoutCreatedForDataInput!
+}
+
+input DocumentUpdateWithWhereUniqueWithoutTagsInput {
+  where: DocumentWhereUniqueInput!
+  data: DocumentUpdateWithoutTagsDataInput!
+}
+
+input DocumentUpsertWithoutConfigInput {
+  update: DocumentUpdateWithoutConfigDataInput!
+  create: DocumentCreateWithoutConfigInput!
 }
 
 input DocumentUpsertWithoutSectionsInput {
@@ -225,6 +540,12 @@ input DocumentUpsertWithWhereUniqueWithoutCreatedForInput {
   where: DocumentWhereUniqueInput!
   update: DocumentUpdateWithoutCreatedForDataInput!
   create: DocumentCreateWithoutCreatedForInput!
+}
+
+input DocumentUpsertWithWhereUniqueWithoutTagsInput {
+  where: DocumentWhereUniqueInput!
+  update: DocumentUpdateWithoutTagsDataInput!
+  create: DocumentCreateWithoutTagsInput!
 }
 
 input DocumentWhereInput {
@@ -340,6 +661,10 @@ input DocumentWhereInput {
   name_not_ends_with: String
   createdBy: UserWhereInput
   createdFor: OrganisationWhereInput
+  config: DocumentConfigWhereInput
+  tags_every: TagWhereInput
+  tags_some: TagWhereInput
+  tags_none: TagWhereInput
   sections_every: SectionWhereInput
   sections_some: SectionWhereInput
   sections_none: SectionWhereInput
@@ -348,6 +673,9 @@ input DocumentWhereInput {
 input DocumentWhereUniqueInput {
   id: ID
 }
+
+"""Raw JSON value"""
+scalar Json
 
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
@@ -359,26 +687,38 @@ type Mutation {
   createOrganisation(data: OrganisationCreateInput!): Organisation!
   createDocument(data: DocumentCreateInput!): Document!
   createSection(data: SectionCreateInput!): Section!
+  createDocumentConfig(data: DocumentConfigCreateInput!): DocumentConfig!
+  createTag(data: TagCreateInput!): Tag!
   createUser(data: UserCreateInput!): User!
   updateOrganisation(data: OrganisationUpdateInput!, where: OrganisationWhereUniqueInput!): Organisation
   updateDocument(data: DocumentUpdateInput!, where: DocumentWhereUniqueInput!): Document
   updateSection(data: SectionUpdateInput!, where: SectionWhereUniqueInput!): Section
+  updateDocumentConfig(data: DocumentConfigUpdateInput!, where: DocumentConfigWhereUniqueInput!): DocumentConfig
+  updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteOrganisation(where: OrganisationWhereUniqueInput!): Organisation
   deleteDocument(where: DocumentWhereUniqueInput!): Document
   deleteSection(where: SectionWhereUniqueInput!): Section
+  deleteDocumentConfig(where: DocumentConfigWhereUniqueInput!): DocumentConfig
+  deleteTag(where: TagWhereUniqueInput!): Tag
   deleteUser(where: UserWhereUniqueInput!): User
   upsertOrganisation(where: OrganisationWhereUniqueInput!, create: OrganisationCreateInput!, update: OrganisationUpdateInput!): Organisation!
   upsertDocument(where: DocumentWhereUniqueInput!, create: DocumentCreateInput!, update: DocumentUpdateInput!): Document!
   upsertSection(where: SectionWhereUniqueInput!, create: SectionCreateInput!, update: SectionUpdateInput!): Section!
+  upsertDocumentConfig(where: DocumentConfigWhereUniqueInput!, create: DocumentConfigCreateInput!, update: DocumentConfigUpdateInput!): DocumentConfig!
+  upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyOrganisations(data: OrganisationUpdateInput!, where: OrganisationWhereInput): BatchPayload!
   updateManyDocuments(data: DocumentUpdateInput!, where: DocumentWhereInput): BatchPayload!
   updateManySections(data: SectionUpdateInput!, where: SectionWhereInput): BatchPayload!
+  updateManyDocumentConfigs(data: DocumentConfigUpdateInput!, where: DocumentConfigWhereInput): BatchPayload!
+  updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   deleteManyOrganisations(where: OrganisationWhereInput): BatchPayload!
   deleteManyDocuments(where: DocumentWhereInput): BatchPayload!
   deleteManySections(where: SectionWhereInput): BatchPayload!
+  deleteManyDocumentConfigs(where: DocumentConfigWhereInput): BatchPayload!
+  deleteManyTags(where: TagWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -671,14 +1011,20 @@ type Query {
   organisations(where: OrganisationWhereInput, orderBy: OrganisationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organisation]!
   documents(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Document]!
   sections(where: SectionWhereInput, orderBy: SectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Section]!
+  documentConfigs(where: DocumentConfigWhereInput, orderBy: DocumentConfigOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DocumentConfig]!
+  tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   organisation(where: OrganisationWhereUniqueInput!): Organisation
   document(where: DocumentWhereUniqueInput!): Document
   section(where: SectionWhereUniqueInput!): Section
+  documentConfig(where: DocumentConfigWhereUniqueInput!): DocumentConfig
+  tag(where: TagWhereUniqueInput!): Tag
   user(where: UserWhereUniqueInput!): User
   organisationsConnection(where: OrganisationWhereInput, orderBy: OrganisationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganisationConnection!
   documentsConnection(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentConnection!
   sectionsConnection(where: SectionWhereInput, orderBy: SectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SectionConnection!
+  documentConfigsConnection(where: DocumentConfigWhereInput, orderBy: DocumentConfigOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentConfigConnection!
+  tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -691,9 +1037,11 @@ type Query {
 type Section implements Node {
   id: ID!
   createdAt: DateTime!
-  name: String
   createdBy(where: UserWhereInput): User
   belongsTo(where: DocumentWhereInput): Document
+  type: String
+  rawContent: Json
+  position: Int
 }
 
 """A connection to a list of items."""
@@ -707,7 +1055,9 @@ type SectionConnection {
 }
 
 input SectionCreateInput {
-  name: String
+  type: String
+  rawContent: Json
+  position: Int
   createdBy: UserCreateOneInput
   belongsTo: DocumentCreateOneWithoutSectionsInput
 }
@@ -718,7 +1068,9 @@ input SectionCreateManyWithoutBelongsToInput {
 }
 
 input SectionCreateWithoutBelongsToInput {
-  name: String
+  type: String
+  rawContent: Json
+  position: Int
   createdBy: UserCreateOneInput
 }
 
@@ -736,8 +1088,12 @@ enum SectionOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  name_ASC
-  name_DESC
+  type_ASC
+  type_DESC
+  rawContent_ASC
+  rawContent_DESC
+  position_ASC
+  position_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -745,7 +1101,9 @@ enum SectionOrderByInput {
 type SectionPreviousValues {
   id: ID!
   createdAt: DateTime!
-  name: String
+  type: String
+  rawContent: Json
+  position: Int
 }
 
 type SectionSubscriptionPayload {
@@ -788,7 +1146,9 @@ input SectionSubscriptionWhereInput {
 }
 
 input SectionUpdateInput {
-  name: String
+  type: String
+  rawContent: Json
+  position: Int
   createdBy: UserUpdateOneInput
   belongsTo: DocumentUpdateOneWithoutSectionsInput
 }
@@ -803,7 +1163,9 @@ input SectionUpdateManyWithoutBelongsToInput {
 }
 
 input SectionUpdateWithoutBelongsToDataInput {
-  name: String
+  type: String
+  rawContent: Json
+  position: Int
   createdBy: UserUpdateOneInput
 }
 
@@ -889,6 +1251,257 @@ input SectionWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  type: String
+
+  """All values that are not equal to given value."""
+  type_not: String
+
+  """All values that are contained in given list."""
+  type_in: [String!]
+
+  """All values that are not contained in given list."""
+  type_not_in: [String!]
+
+  """All values less than the given value."""
+  type_lt: String
+
+  """All values less than or equal the given value."""
+  type_lte: String
+
+  """All values greater than the given value."""
+  type_gt: String
+
+  """All values greater than or equal the given value."""
+  type_gte: String
+
+  """All values containing the given string."""
+  type_contains: String
+
+  """All values not containing the given string."""
+  type_not_contains: String
+
+  """All values starting with the given string."""
+  type_starts_with: String
+
+  """All values not starting with the given string."""
+  type_not_starts_with: String
+
+  """All values ending with the given string."""
+  type_ends_with: String
+
+  """All values not ending with the given string."""
+  type_not_ends_with: String
+  position: Int
+
+  """All values that are not equal to given value."""
+  position_not: Int
+
+  """All values that are contained in given list."""
+  position_in: [Int!]
+
+  """All values that are not contained in given list."""
+  position_not_in: [Int!]
+
+  """All values less than the given value."""
+  position_lt: Int
+
+  """All values less than or equal the given value."""
+  position_lte: Int
+
+  """All values greater than the given value."""
+  position_gt: Int
+
+  """All values greater than or equal the given value."""
+  position_gte: Int
+  createdBy: UserWhereInput
+  belongsTo: DocumentWhereInput
+}
+
+input SectionWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  organisation(where: OrganisationSubscriptionWhereInput): OrganisationSubscriptionPayload
+  document(where: DocumentSubscriptionWhereInput): DocumentSubscriptionPayload
+  section(where: SectionSubscriptionWhereInput): SectionSubscriptionPayload
+  documentConfig(where: DocumentConfigSubscriptionWhereInput): DocumentConfigSubscriptionPayload
+  tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Tag implements Node {
+  id: ID!
+  name: String!
+  documents(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Document!]
+}
+
+"""A connection to a list of items."""
+type TagConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TagEdge]!
+  aggregate: AggregateTag!
+}
+
+input TagCreateInput {
+  name: String!
+  documents: DocumentCreateManyWithoutTagsInput
+}
+
+input TagCreateManyWithoutDocumentsInput {
+  create: [TagCreateWithoutDocumentsInput!]
+  connect: [TagWhereUniqueInput!]
+}
+
+input TagCreateWithoutDocumentsInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type TagEdge {
+  """The item at the end of the edge."""
+  node: Tag!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TagOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TagPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type TagSubscriptionPayload {
+  mutation: MutationType!
+  node: Tag
+  updatedFields: [String!]
+  previousValues: TagPreviousValues
+}
+
+input TagSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TagSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TagSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TagSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TagWhereInput
+}
+
+input TagUpdateInput {
+  name: String
+  documents: DocumentUpdateManyWithoutTagsInput
+}
+
+input TagUpdateManyWithoutDocumentsInput {
+  create: [TagCreateWithoutDocumentsInput!]
+  connect: [TagWhereUniqueInput!]
+  disconnect: [TagWhereUniqueInput!]
+  delete: [TagWhereUniqueInput!]
+  update: [TagUpdateWithWhereUniqueWithoutDocumentsInput!]
+  upsert: [TagUpsertWithWhereUniqueWithoutDocumentsInput!]
+}
+
+input TagUpdateWithoutDocumentsDataInput {
+  name: String
+}
+
+input TagUpdateWithWhereUniqueWithoutDocumentsInput {
+  where: TagWhereUniqueInput!
+  data: TagUpdateWithoutDocumentsDataInput!
+}
+
+input TagUpsertWithWhereUniqueWithoutDocumentsInput {
+  where: TagWhereUniqueInput!
+  update: TagUpdateWithoutDocumentsDataInput!
+  create: TagCreateWithoutDocumentsInput!
+}
+
+input TagWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TagWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TagWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TagWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   name: String
 
   """All values that are not equal to given value."""
@@ -929,19 +1542,14 @@ input SectionWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  createdBy: UserWhereInput
-  belongsTo: DocumentWhereInput
+  documents_every: DocumentWhereInput
+  documents_some: DocumentWhereInput
+  documents_none: DocumentWhereInput
 }
 
-input SectionWhereUniqueInput {
+input TagWhereUniqueInput {
   id: ID
-}
-
-type Subscription {
-  organisation(where: OrganisationSubscriptionWhereInput): OrganisationSubscriptionPayload
-  document(where: DocumentSubscriptionWhereInput): DocumentSubscriptionPayload
-  section(where: SectionSubscriptionWhereInput): SectionSubscriptionPayload
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  name: String
 }
 
 type User implements Node {

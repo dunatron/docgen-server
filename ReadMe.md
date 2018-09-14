@@ -64,12 +64,19 @@ query {
 ###### get Single Document
 
 ```
-query {
-  document(where: {
-    id: "cjm005p2m67670b05tht8yzo4"
-  }) {
-    id
+query getSingleDocumet($id: ID!){
+  singleDocument(id:$id) {
     name
+    id
+    createdAt
+    createdBy {
+      id
+      name
+    }
+    createdFor {
+      id
+      name
+    }
   }
 }
 ```
@@ -86,6 +93,43 @@ query {
 ```
 
 ### DB Queries
+
+####### get all users
+This gets all of the users with their attached organisations and documents
+NOTE: you wouldnt do this query in the app
+
+```
+query {
+  users {
+    id
+    email
+    name
+    organisations {
+      id
+      name
+    }
+    documents {
+      id
+      name
+    }
+  }
+}
+```
+
+###### get all Tags
+
+```
+query {
+  tags {
+    id
+    name
+    documents {
+      id
+      name
+    }
+  }
+}
+```
 
 ## MUTATIONS
 
@@ -147,6 +191,55 @@ You will need to include variables
 
 ### DB Mutations
 
+###### create Organisation
+
+Note: currently on a db/server function. i.e the client app cannot create an organisation
+
+```
+mutation {
+  createOrganisation(data:{
+    name: "Insert Organisation Name"
+  }) {
+    name
+    id
+  }
+}
+```
+
+###### DB: create User
+
+```
+mutation {
+  createUser(data:{
+    name:"Heath"
+    email:"heath.dunlop.hd@gmail.com"
+    password:"password123"
+    organisations:{
+      connect:{
+        id: "cjm1ckgh59fjt0b05y658miof"
+      }
+    }
+  }) {
+    id
+    email
+    name
+  }
+}
+```
+
+###### DB: create Tag
+
+```
+mutation {
+  createTag (data:{
+    name: "Lease"
+  }){
+  	id
+    name
+  }
+}
+```
+
 ###### create Document
 
 ```
@@ -155,44 +248,60 @@ mutation {
     name: "Here is the First Document For Nomos"
     createdBy:{
       connect: {
-        id:"cjlvr4enenesd0b52en666s98"
+        id:"cjm1cwasd9gdn0b05ur3ev17g"
+      }
+    }
+    tags:{
+      connect:{
+        id:"cjm1dcfkb9hef0b05ub7ildcd"
       }
     }
     createdFor:{
       connect:{
-        id:"cjm14c2tc8xgx0b05cc5xrp51"
+        id:"cjm1ckgh59fjt0b05y658miof"
       }
     }
   }) {
     name
     id
-    sections {
+    tags {
       id
       name
+    }
+    sections {
+      id
+      type
+      rawContent
     }
   }
 }
 ```
 
-###### create Section
+###### DB: create Section
 
 ```
 mutation {
   createSection(data: {
     createdBy:{
       connect: {
-        id: "cjlvr4enenesd0b52en666s98"
+        id: "cjm1cwasd9gdn0b05ur3ev17g"
       }
     }
     belongsTo:{
       connect:{
-        id: "cjlvsupqpnj9b0b52nrsv5jvm"
+        id: "cjm1dhf879hod0b05djdyqtzq"
       }
     }
-    name: "Here is a section for a document"
+    type:"h1"
+    rawContent:"{\"int\": 1, \"string\": \"value\"}"
   }) {
     id
-    name
+    type
+    rawContent
+    belongsTo {
+      id
+      name
+    }
   }
 }
 ```
@@ -216,5 +325,9 @@ mutation {
 [Just use Yogo files?](https://github.com/prisma/graphql-yoga)
 
 # DOCS
+
+- [Prisma Data modelling Docs](<https://www.prisma.io/docs/reference/service-configuration/data-modelling-(sdl)-eiroozae8u#scalar-types>)
+
+- [Prisma Types](https://www.prisma.io/docs/data-model-and-migrations/data-model-knul/#object-types)
 
 - https://www.prisma.io/docs/prisma-graphql-api/using-the-prisma-api-nms2/

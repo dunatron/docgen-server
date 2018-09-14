@@ -13,7 +13,9 @@ function allOrganisations(root, args, context, info) {
 function singleDocument(root, args, context, info) {
   // return context.db.query.documents({ where: { id: args.id } }, info)
   // return context.db.query.documents({ where: { id: "cjlzzscm3667o0b05w4gyszul" } }, "{ id }")
-  return context.db.query.documents({ where: { id: args.id } }, info)
+  // return context.db.query.documents({ where: { id: args.id } }, info)
+  // return context.db.query.document({ where: { id: args.id } }, info)
+  return context.db.query.document({ where: { id: args.id } }, info)
 }
 
 function info(root, args, context, info) {

@@ -4,7 +4,10 @@ type Query {
   info: String!
   allOrganisations: [Organisation!]!
   documentFeed: [Document!]!
-  singleDocument(id: ID!): Document!
+  singleDocument(id: ID!): Document
+  organisation(where: OrganisationWhereUniqueInput!): Organisation
+  # document(where: DocumentWhereUniqueInput!): Document
+  # singleDocument(where: DocumentWhereUniqueInput!): Document
   allUsers: [User!]!
 }
 
