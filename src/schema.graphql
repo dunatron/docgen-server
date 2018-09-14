@@ -13,8 +13,9 @@ type Query {
 
 type Mutation {
   # postDocument(name: String, orgId: ID, userId: ID): Document!
+  # postDocument(name: String, createdFor: ID): Document!
   postDocument(name: String, orgId: ID): Document!
-  postSection(name: String, belongsTo: ID): Section!
+  postSection(type: String, belongsTo: ID): Section!
   updateDocument(id: ID!, name: String): Document!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload

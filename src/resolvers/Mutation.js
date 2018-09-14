@@ -59,6 +59,10 @@ function postDocument(parent, args, context, info) {
         name: args.name,
         createdBy: { connect: { id: userId } },
         createdFor: { connect: { id: args.orgId } },
+        // createdFor: { connect: { where: { id: args.createdFor } } },
+        // createdFor: { connect: { where: { id: args.orgID } } },
+        //createdFor: { connect: { id: args.createdFor } },
+        //return context.db.query.document({ where: { id: args.id } }, info)
       },
     },
     info
@@ -70,7 +74,7 @@ function postSection(parent, args, context, info) {
   return context.db.mutation.createSection(
     {
       data: {
-        name: args.name,
+        type: args.type,
         createdBy: { connect: { id: userId } },
         belongsTo: { connect: { id: args.belongsTo } },
       },
