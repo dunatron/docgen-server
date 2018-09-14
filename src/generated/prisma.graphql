@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/heath-dunlop-37e897/doc_gen_db/dev
-# timestamp: Fri Sep 14 2018 12:38:43 GMT+1200 (NZST)
+# timestamp: Fri Sep 14 2018 20:24:13 GMT+1200 (NZST)
 
 type AggregateDocument {
   count: Int!
@@ -41,6 +41,7 @@ type Document implements Node {
   config(where: DocumentConfigWhereInput): DocumentConfig
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   sections(where: SectionWhereInput, orderBy: SectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Section!]
+  shortCodes: Json
 }
 
 type DocumentConfig implements Node {
@@ -276,6 +277,7 @@ type DocumentConnection {
 
 input DocumentCreateInput {
   name: String
+  shortCodes: Json
   createdBy: UserCreateOneWithoutDocumentsInput
   createdFor: OrganisationCreateOneWithoutDocumentsInput
   config: DocumentConfigCreateOneWithoutBelongsToInput
@@ -310,6 +312,7 @@ input DocumentCreateOneWithoutSectionsInput {
 
 input DocumentCreateWithoutConfigInput {
   name: String
+  shortCodes: Json
   createdBy: UserCreateOneWithoutDocumentsInput
   createdFor: OrganisationCreateOneWithoutDocumentsInput
   tags: TagCreateManyWithoutDocumentsInput
@@ -318,6 +321,7 @@ input DocumentCreateWithoutConfigInput {
 
 input DocumentCreateWithoutCreatedByInput {
   name: String
+  shortCodes: Json
   createdFor: OrganisationCreateOneWithoutDocumentsInput
   config: DocumentConfigCreateOneWithoutBelongsToInput
   tags: TagCreateManyWithoutDocumentsInput
@@ -326,6 +330,7 @@ input DocumentCreateWithoutCreatedByInput {
 
 input DocumentCreateWithoutCreatedForInput {
   name: String
+  shortCodes: Json
   createdBy: UserCreateOneWithoutDocumentsInput
   config: DocumentConfigCreateOneWithoutBelongsToInput
   tags: TagCreateManyWithoutDocumentsInput
@@ -334,6 +339,7 @@ input DocumentCreateWithoutCreatedForInput {
 
 input DocumentCreateWithoutSectionsInput {
   name: String
+  shortCodes: Json
   createdBy: UserCreateOneWithoutDocumentsInput
   createdFor: OrganisationCreateOneWithoutDocumentsInput
   config: DocumentConfigCreateOneWithoutBelongsToInput
@@ -342,6 +348,7 @@ input DocumentCreateWithoutSectionsInput {
 
 input DocumentCreateWithoutTagsInput {
   name: String
+  shortCodes: Json
   createdBy: UserCreateOneWithoutDocumentsInput
   createdFor: OrganisationCreateOneWithoutDocumentsInput
   config: DocumentConfigCreateOneWithoutBelongsToInput
@@ -364,6 +371,8 @@ enum DocumentOrderByInput {
   createdAt_DESC
   name_ASC
   name_DESC
+  shortCodes_ASC
+  shortCodes_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -372,6 +381,7 @@ type DocumentPreviousValues {
   id: ID!
   createdAt: DateTime!
   name: String
+  shortCodes: Json
 }
 
 type DocumentSubscriptionPayload {
@@ -415,6 +425,7 @@ input DocumentSubscriptionWhereInput {
 
 input DocumentUpdateInput {
   name: String
+  shortCodes: Json
   createdBy: UserUpdateOneWithoutDocumentsInput
   createdFor: OrganisationUpdateOneWithoutDocumentsInput
   config: DocumentConfigUpdateOneWithoutBelongsToInput
@@ -467,6 +478,7 @@ input DocumentUpdateOneWithoutSectionsInput {
 
 input DocumentUpdateWithoutConfigDataInput {
   name: String
+  shortCodes: Json
   createdBy: UserUpdateOneWithoutDocumentsInput
   createdFor: OrganisationUpdateOneWithoutDocumentsInput
   tags: TagUpdateManyWithoutDocumentsInput
@@ -475,6 +487,7 @@ input DocumentUpdateWithoutConfigDataInput {
 
 input DocumentUpdateWithoutCreatedByDataInput {
   name: String
+  shortCodes: Json
   createdFor: OrganisationUpdateOneWithoutDocumentsInput
   config: DocumentConfigUpdateOneWithoutBelongsToInput
   tags: TagUpdateManyWithoutDocumentsInput
@@ -483,6 +496,7 @@ input DocumentUpdateWithoutCreatedByDataInput {
 
 input DocumentUpdateWithoutCreatedForDataInput {
   name: String
+  shortCodes: Json
   createdBy: UserUpdateOneWithoutDocumentsInput
   config: DocumentConfigUpdateOneWithoutBelongsToInput
   tags: TagUpdateManyWithoutDocumentsInput
@@ -491,6 +505,7 @@ input DocumentUpdateWithoutCreatedForDataInput {
 
 input DocumentUpdateWithoutSectionsDataInput {
   name: String
+  shortCodes: Json
   createdBy: UserUpdateOneWithoutDocumentsInput
   createdFor: OrganisationUpdateOneWithoutDocumentsInput
   config: DocumentConfigUpdateOneWithoutBelongsToInput
@@ -499,6 +514,7 @@ input DocumentUpdateWithoutSectionsDataInput {
 
 input DocumentUpdateWithoutTagsDataInput {
   name: String
+  shortCodes: Json
   createdBy: UserUpdateOneWithoutDocumentsInput
   createdFor: OrganisationUpdateOneWithoutDocumentsInput
   config: DocumentConfigUpdateOneWithoutBelongsToInput

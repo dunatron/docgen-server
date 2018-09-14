@@ -277,6 +277,41 @@ mutation {
 }
 ```
 
+###### create Document wth short codes
+
+```
+mutation {
+  createDocument(data: {
+    name: "Here is the First Document For Nomos"
+    createdBy:{
+      connect: {
+        id:"cjm1qpsuaaish0b05ortyisv4"
+      }
+    }
+    shortCodes:"{\"int\": 1, \"string\": \"value\"}"
+    createdFor:{
+      connect:{
+        id:"cjm1qmjnyailj0b05ns7uh04b"
+      }
+    }
+  }) {
+    name
+    id
+    shortCodes
+    tags {
+      id
+      name
+    }
+    sections {
+      id
+      type
+      rawContent
+
+    }
+  }
+}
+```
+
 ###### DB: create Section
 
 ```

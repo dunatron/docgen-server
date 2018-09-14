@@ -15,6 +15,7 @@ type Document {
   config: DocumentConfig
   tags: [Tag!]!
   sections: [Section!]! @relation(name: "DocumentSections", onDelete: CASCADE)
+  shortCodes: Json
 }
 
 type Section {
