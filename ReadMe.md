@@ -13,6 +13,88 @@ perhaps an account has like org details etc.
 A document can get its data from agreements?
 Something to shape how we get this data
 
+## Technologies
+
+- [GraphQL](https://graphql.org/) Will be used as it will allow us to scale our application with speed and maximum flexibility
+- [Prisma Server](https://www.prisma.io/) Will be used for our GraphQL backend. Prisma makes working with databases easy through the simplicity of GraphQL. We are able to easily construct our database model through a schema and on to of that is a layer where we can add our business logic when certain queries are called
+- [Apollo Client](https://www.apollographql.com/docs/react/) It is simply the best way to use GraphL for our front end. This works best with Libraries such as ReactJS
+- [ReactJS](https://reactjs.org/) ReactJS is simply the best Library for building user interfaces.
+
+## Deployment
+
+The current technologies can be deployed anywhere.
+
+###### Server
+
+The server is a Prisma(GraphQL) Server and can be deployed anywhere.
+ToDo: decide where it would be hosted
+
+###### Client
+
+The Client is composed of Apollo, GraphQl, and React. This client can be deployed anywhere and will retrieve it's data via graphQL queries that it will retrieve from our servers endpoint
+
+# How To Build It
+
+### Organisation
+
+- An Organisation at it's core will contain users and documents.
+- There will be an organisation Config which will set up the details/config that the application needs.
+-
+
+### Organisation Config
+
+- When an organisation is setup it will a config associated with it
+- This config can be used to retrieve data from endpoints like v4 and v5 etc.
+- The config could be an interface to retrieve this information, depending on how different v4 & v5 are at getting their information. This is fine, It just means we would have an interface for the different versions and they know how to pipe in the information we want
+
+### User
+
+- There will be users.
+- Users will be associated with an organisation.
+- Users can be associated with many organisations.
+
+### Documents
+
+- Documents will be associated with 1 Organisation only.
+- They will be created by A user for an Organisation.
+- Will be able to have many authors associated with it.
+- Will be composed of sections. 
+- Can have many document configs associated with it.
+- many configs means we can supply different ways a document gets the data it needs
+- has a Data Config field.
+
+### Document Config
+- A document Config can belong to many different documents. 
+- It will essentially be a config on How to retrieve data that can be used in the documents, Similar but also quite different to the organisation config. 
+- These can then also be viewed as a sort of template that can be applied to a document that would then instantly expose data for the document
+- Example. A config that gets the data for a certain Agreement in v4. This data is then used across multiple documents and could be titled "My Agreements Data". 
+- Example: A more generic Document Config could be a list of all the Agreements. To Understand this the DataConfig needs to be explained.
+
+### Section
+Note: could actually rename to RichComponent
+- A section will belong to a document.
+- A section Will essentially be a rich component.
+- A section will have three main fields. type, content, and position.
+- type: will tell us what type of rich component it is. 
+- content: will hold the content for the rich component
+- position: an int telling the document at what position to render the component
+
+### dataConfig 
+This will a field on the document. We are able to store Json blobs and this is exactly what that will be.
+- it will be able to store an array of deep nested objects(objects and arrays) and these will eventually have keys with values. These are obviously reached through going through the required path. This path is what our document will be referencing.
+- So our dataConfig field will store their key value pairs for this data in it's config, and will update it's data when needed.
+- If the document config somehow loses these ability to retrieve it's data we still have reference to what it's value use to be. We could event add pretty colors/alerts saying that this data is no longer reachable/updated. (Busines logic, business logic)
+
+### Printing
+- We are going to build a canvas that will print pixel perfect documents.
+
+### Exporting
+- People will print straight from our application and we should make it so spectacular that they won't want to use anything else. 
+- However there is a lot of use cases for exporting. Email etc.
+- Our documents are stored with raw data essentially. This means we can export it however we want and easily.
+- we can easily create various export functions, like export as email, export as markdown etc, etc
+
+
 ###### tables discussion
 
 - Should we be using tables for markdown? It could be a good win if we can get it right.
