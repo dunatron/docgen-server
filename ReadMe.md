@@ -539,3 +539,6 @@ mutation {
 - [Prisma Types](https://www.prisma.io/docs/data-model-and-migrations/data-model-knul/#object-types)
 
 - https://www.prisma.io/docs/prisma-graphql-api/using-the-prisma-api-nms2/
+
+- [HandleBars](https://github.com/segmentio/metalsmith/issues/75)
+- [Moustache For the Win ](https://github.com/janl/mustache.js/)
