@@ -186,6 +186,38 @@ const SHORT_CODES = [
 - Our documents are stored with raw data essentially. This means we can export it however we want and easily.
 - we can easily create various export functions, like export as email, export as markdown etc, etc
 
+###### word documents/replace variable
+
+- We have something I am calling DataPiper. This uses docXTemplater under the hood.
+- It will be able to convert word document templates. There are some limitations, But I feel we can massage the data easily enough for its export.
+- It will work well for a first iteration and can even be it's own standalone feature.
+- It will try to replace any variables `{variableName}`
+- It can have loops in the data which would look like the following
+
+```
+events: [
+  {
+    name: "The First Event",
+    date: "21/03/1966",
+  },
+  {
+    name: "The Second Event",
+    date: "24/03/1966",
+  },
+],
+```
+
+and in the microsoft document itself it would have look like the following
+
+```
+{#events}
+  {name}
+  {date}
+{/events}
+```
+
+NOTES: We are ultimately wanting to have our documents created and exported instead of this very manual task
+
 ###### tables discussion
 
 - Should we be using tables for markdown? It could be a good win if we can get it right.
