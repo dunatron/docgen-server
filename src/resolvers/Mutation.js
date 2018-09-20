@@ -83,9 +83,31 @@ function postSection(parent, args, context, info) {
   )
 }
 
+function postDataConfig(parent, args, context, info) {
+  const userId = getUserId(context)
+  const camelName = args.name
+    .replace(/\s(.)/g, function($1) {
+      return $1.toUpperCase()
+    })
+    .replace(/\s/g, "")
+    .replace(/^(.)/, function($1) {
+      return $1.toLowerCase()
+    })
+  return context.db.mutation.createDataConfig(
+    {
+      data: {
+        name: camelName,
+        organisation: { connect: { id: args.orgId } },
+      },
+    },
+    info
+  )
+}
+
 module.exports = {
   signup,
   login,
   postDocument,
   postSection,
+  postDataConfig,
 }

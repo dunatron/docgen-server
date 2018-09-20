@@ -4,6 +4,8 @@ type Organisation {
   documents: [Document!]!
     @relation(name: "OrganisationDocuments", onDelete: CASCADE)
   users: [User!]!
+  dataConfigs: [DataConfig!]!
+    @relation(name: "OrganisationDataConfigs", onDelete: CASCADE)
 }
 
 type Document {
@@ -48,4 +50,10 @@ type Tag {
   id: ID! @unique
   name: String! @unique
   documents: [Document!]!
+}
+
+type DataConfig {
+  id: ID! @unique
+  organisation: Organisation @relation(name: "OrganisationDataConfigs")
+  name: String!
 }

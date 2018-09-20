@@ -1,4 +1,4 @@
-# import Organisation, Document, Section from "./generated/prisma.graphql"
+# import Organisation, User, Document, Section, DocumentConfig from "./generated/prisma.graphql"
 
 type Query {
   info: String!
@@ -6,9 +6,11 @@ type Query {
   documentFeed: [Document!]!
   singleDocument(id: ID!): Document
   organisation(where: OrganisationWhereUniqueInput!): Organisation
+  orgDataConfigs(orgId: ID!): [DataConfig]!
   # document(where: DocumentWhereUniqueInput!): Document
   # singleDocument(where: DocumentWhereUniqueInput!): Document
   allUsers: [User!]!
+  getUser: User!
 }
 
 type Mutation {
@@ -19,6 +21,7 @@ type Mutation {
   updateDocument(id: ID!, name: String): Document!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  postDataConfig(name: String!, orgId: ID!): DataConfig!
 }
 
 # type Document {
@@ -36,4 +39,5 @@ type User {
   name: String!
   email: String!
   documents: [Document!]!
+  organisations: [Organisation!]!
 }

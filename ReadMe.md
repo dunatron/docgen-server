@@ -248,6 +248,31 @@ raw Markdown line up prettily. You can also use inline Markdown.
 
 ###### get Documents
 
+###### get organisation DataConfigs
+
+```
+query getOrgDataConfigs($orgId:ID!){
+  orgDataConfigs(orgId:$orgId) {
+    id
+    name
+  }
+}
+```
+
+###### get user Organisations
+
+```
+query {
+ 	user(where:{id: "cjm1qpsuaaish0b05ortyisv4"}) {
+  	id
+  	organisations {
+   	 id
+    	name
+  	}
+	}
+}
+```
+
 ```
 query {
   documentFeed {
@@ -336,6 +361,20 @@ query {
 }
 ```
 
+###### DB: get DataConfigs for orgainsation
+
+```
+query {
+dataConfigs(where:{organisation:{id: "cjm1qmjnyailj0b05ns7uh04b"}}) {
+id
+name
+organisation {
+name
+}
+}
+}
+```
+
 ## MUTATIONS
 
 ### App Mutations
@@ -347,18 +386,18 @@ query {
 
 ```
 mutation PostMutation($name:String!){
-  postDocument(name: $name, orgId: "cjm14c2tc8xgx0b05cc5xrp51") {
-    name
-    createdAt
-    createdFor {
-      name
-    }
-    createdBy {
-      email
-      name
-      id
-    }
-  }
+postDocument(name: $name, orgId: "cjm14c2tc8xgx0b05cc5xrp51") {
+name
+createdAt
+createdFor {
+name
+}
+createdBy {
+email
+name
+id
+}
+}
 }
 ```
 
@@ -366,12 +405,12 @@ mutation PostMutation($name:String!){
 
 ```
 mutation {
-  signup(email: "testuser@test.com" name:"Test User" password:"test123") {
-    user {
-      id
-      name
-    }
-  }
+signup(email: "testuser@test.com" name:"Test User" password:"test123") {
+user {
+id
+name
+}
+}
 }
 ```
 
@@ -379,10 +418,10 @@ mutation {
 
 ```
 mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-    }
-  }
+login(email: $email, password: $password) {
+token
+}
+}
 ```
 
 You will need to include variables
@@ -402,12 +441,12 @@ Note: currently on a db/server function. i.e the client app cannot create an org
 
 ```
 mutation {
-  createOrganisation(data:{
-    name: "Insert Organisation Name"
-  }) {
-    name
-    id
-  }
+createOrganisation(data:{
+name: "Insert Organisation Name"
+}) {
+name
+id
+}
 }
 ```
 
@@ -415,20 +454,20 @@ mutation {
 
 ```
 mutation {
-  createUser(data:{
-    name:"Heath"
-    email:"heath.dunlop.hd@gmail.com"
-    password:"password123"
-    organisations:{
-      connect:{
-        id: "cjm1ckgh59fjt0b05y658miof"
-      }
-    }
-  }) {
-    id
-    email
-    name
-  }
+createUser(data:{
+name:"Heath"
+email:"heath.dunlop.hd@gmail.com"
+password:"password123"
+organisations:{
+connect:{
+id: "cjm1ckgh59fjt0b05y658miof"
+}
+}
+}) {
+id
+email
+name
+}
 }
 ```
 
@@ -436,12 +475,12 @@ mutation {
 
 ```
 mutation {
-  createTag (data:{
-    name: "Lease"
-  }){
-  	id
-    name
-  }
+createTag (data:{
+name: "Lease"
+}){
+id
+name
+}
 }
 ```
 
@@ -449,36 +488,36 @@ mutation {
 
 ```
 mutation {
-  createDocument(data: {
-    name: "Here is the First Document For Nomos"
-    createdBy:{
-      connect: {
-        id:"cjm1cwasd9gdn0b05ur3ev17g"
-      }
-    }
-    tags:{
-      connect:{
-        id:"cjm1dcfkb9hef0b05ub7ildcd"
-      }
-    }
-    createdFor:{
-      connect:{
-        id:"cjm1ckgh59fjt0b05y658miof"
-      }
-    }
-  }) {
-    name
-    id
-    tags {
-      id
-      name
-    }
-    sections {
-      id
-      type
-      rawContent
-    }
-  }
+createDocument(data: {
+name: "Here is the First Document For Nomos"
+createdBy:{
+connect: {
+id:"cjm1cwasd9gdn0b05ur3ev17g"
+}
+}
+tags:{
+connect:{
+id:"cjm1dcfkb9hef0b05ub7ildcd"
+}
+}
+createdFor:{
+connect:{
+id:"cjm1ckgh59fjt0b05y658miof"
+}
+}
+}) {
+name
+id
+tags {
+id
+name
+}
+sections {
+id
+type
+rawContent
+}
+}
 }
 ```
 
@@ -486,34 +525,35 @@ mutation {
 
 ```
 mutation {
-  createDocument(data: {
-    name: "Here is the First Document For Nomos"
-    createdBy:{
-      connect: {
-        id:"cjm1qpsuaaish0b05ortyisv4"
-      }
-    }
-    shortCodes:"{\"int\": 1, \"string\": \"value\"}"
-    createdFor:{
-      connect:{
-        id:"cjm1qmjnyailj0b05ns7uh04b"
-      }
-    }
-  }) {
-    name
-    id
-    shortCodes
-    tags {
-      id
-      name
-    }
-    sections {
-      id
-      type
-      rawContent
+createDocument(data: {
+name: "Here is the First Document For Nomos"
+createdBy:{
+connect: {
+id:"cjm1qpsuaaish0b05ortyisv4"
+}
+}
+shortCodes:"{\"int\": 1, \"string\": \"value\"}"
+createdFor:{
+connect:{
+id:"cjm1qmjnyailj0b05ns7uh04b"
+}
+}
+}) {
+name
+id
+shortCodes
+tags {
+id
+name
+}
+sections {
+id
+type
+rawContent
 
     }
-  }
+
+}
 }
 ```
 
@@ -521,24 +561,65 @@ mutation {
 
 ```
 mutation {
-  createSection(data: {
-    createdBy:{
-      connect: {
-        id: "cjm1cwasd9gdn0b05ur3ev17g"
-      }
+createSection(data: {
+createdBy:{
+connect: {
+id: "cjm1cwasd9gdn0b05ur3ev17g"
+}
+}
+belongsTo:{
+connect:{
+id: "cjm1dhf879hod0b05djdyqtzq"
+}
+}
+type:"h1"
+rawContent:"{\"int\": 1, \"string\": \"value\"}"
+}) {
+id
+type
+rawContent
+belongsTo {
+id
+name
+}
+}
+}
+```
+
+###### DB: create DataConfig
+
+```
+mutation {
+createDataConfig(data:{
+name:"Second"
+organisation: {
+connect:{
+id: "cjm1qmjnyailj0b05ns7uh04b"
+}
+}
+}) {
+id
+name
+}
+}
+```
+
+###### add user to organisation
+
+```
+mutation {
+  updateUser(data:{
+    organisations:{
+      connect:{id: "cjm1qmjnyailj0b05ns7uh04b"}
     }
-    belongsTo:{
-      connect:{
-        id: "cjm1dhf879hod0b05djdyqtzq"
-      }
-    }
-    type:"h1"
-    rawContent:"{\"int\": 1, \"string\": \"value\"}"
-  }) {
+  }
+  where:{
+    id:"cjm1qpsuaaish0b05ortyisv4"
+  }
+  ) {
     id
-    type
-    rawContent
-    belongsTo {
+    email
+    organisations {
       id
       name
     }
@@ -574,3 +655,7 @@ mutation {
 
 - [HandleBars](https://github.com/segmentio/metalsmith/issues/75)
 - [Moustache For the Win ](https://github.com/janl/mustache.js/)
+
+```
+
+```

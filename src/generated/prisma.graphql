@@ -1,5 +1,9 @@
 # source: https://us1.prisma.sh/heath-dunlop-37e897/doc_gen_db/dev
-# timestamp: Fri Sep 14 2018 20:24:13 GMT+1200 (NZST)
+# timestamp: Thu Sep 20 2018 14:18:55 GMT+1200 (NZST)
+
+type AggregateDataConfig {
+  count: Int!
+}
 
 type AggregateDocument {
   count: Int!
@@ -28,6 +32,225 @@ type AggregateUser {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+type DataConfig implements Node {
+  id: ID!
+  organisation(where: OrganisationWhereInput): Organisation
+  name: String!
+}
+
+"""A connection to a list of items."""
+type DataConfigConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [DataConfigEdge]!
+  aggregate: AggregateDataConfig!
+}
+
+input DataConfigCreateInput {
+  name: String!
+  organisation: OrganisationCreateOneWithoutDataConfigsInput
+}
+
+input DataConfigCreateManyWithoutOrganisationInput {
+  create: [DataConfigCreateWithoutOrganisationInput!]
+  connect: [DataConfigWhereUniqueInput!]
+}
+
+input DataConfigCreateWithoutOrganisationInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type DataConfigEdge {
+  """The item at the end of the edge."""
+  node: DataConfig!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum DataConfigOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type DataConfigPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type DataConfigSubscriptionPayload {
+  mutation: MutationType!
+  node: DataConfig
+  updatedFields: [String!]
+  previousValues: DataConfigPreviousValues
+}
+
+input DataConfigSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DataConfigSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DataConfigSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DataConfigSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DataConfigWhereInput
+}
+
+input DataConfigUpdateInput {
+  name: String
+  organisation: OrganisationUpdateOneWithoutDataConfigsInput
+}
+
+input DataConfigUpdateManyWithoutOrganisationInput {
+  create: [DataConfigCreateWithoutOrganisationInput!]
+  connect: [DataConfigWhereUniqueInput!]
+  disconnect: [DataConfigWhereUniqueInput!]
+  delete: [DataConfigWhereUniqueInput!]
+  update: [DataConfigUpdateWithWhereUniqueWithoutOrganisationInput!]
+  upsert: [DataConfigUpsertWithWhereUniqueWithoutOrganisationInput!]
+}
+
+input DataConfigUpdateWithoutOrganisationDataInput {
+  name: String
+}
+
+input DataConfigUpdateWithWhereUniqueWithoutOrganisationInput {
+  where: DataConfigWhereUniqueInput!
+  data: DataConfigUpdateWithoutOrganisationDataInput!
+}
+
+input DataConfigUpsertWithWhereUniqueWithoutOrganisationInput {
+  where: DataConfigWhereUniqueInput!
+  update: DataConfigUpdateWithoutOrganisationDataInput!
+  create: DataConfigCreateWithoutOrganisationInput!
+}
+
+input DataConfigWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DataConfigWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DataConfigWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DataConfigWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  organisation: OrganisationWhereInput
+}
+
+input DataConfigWhereUniqueInput {
+  id: ID
 }
 
 scalar DateTime
@@ -705,36 +928,42 @@ type Mutation {
   createSection(data: SectionCreateInput!): Section!
   createDocumentConfig(data: DocumentConfigCreateInput!): DocumentConfig!
   createTag(data: TagCreateInput!): Tag!
+  createDataConfig(data: DataConfigCreateInput!): DataConfig!
   createUser(data: UserCreateInput!): User!
   updateOrganisation(data: OrganisationUpdateInput!, where: OrganisationWhereUniqueInput!): Organisation
   updateDocument(data: DocumentUpdateInput!, where: DocumentWhereUniqueInput!): Document
   updateSection(data: SectionUpdateInput!, where: SectionWhereUniqueInput!): Section
   updateDocumentConfig(data: DocumentConfigUpdateInput!, where: DocumentConfigWhereUniqueInput!): DocumentConfig
   updateTag(data: TagUpdateInput!, where: TagWhereUniqueInput!): Tag
+  updateDataConfig(data: DataConfigUpdateInput!, where: DataConfigWhereUniqueInput!): DataConfig
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deleteOrganisation(where: OrganisationWhereUniqueInput!): Organisation
   deleteDocument(where: DocumentWhereUniqueInput!): Document
   deleteSection(where: SectionWhereUniqueInput!): Section
   deleteDocumentConfig(where: DocumentConfigWhereUniqueInput!): DocumentConfig
   deleteTag(where: TagWhereUniqueInput!): Tag
+  deleteDataConfig(where: DataConfigWhereUniqueInput!): DataConfig
   deleteUser(where: UserWhereUniqueInput!): User
   upsertOrganisation(where: OrganisationWhereUniqueInput!, create: OrganisationCreateInput!, update: OrganisationUpdateInput!): Organisation!
   upsertDocument(where: DocumentWhereUniqueInput!, create: DocumentCreateInput!, update: DocumentUpdateInput!): Document!
   upsertSection(where: SectionWhereUniqueInput!, create: SectionCreateInput!, update: SectionUpdateInput!): Section!
   upsertDocumentConfig(where: DocumentConfigWhereUniqueInput!, create: DocumentConfigCreateInput!, update: DocumentConfigUpdateInput!): DocumentConfig!
   upsertTag(where: TagWhereUniqueInput!, create: TagCreateInput!, update: TagUpdateInput!): Tag!
+  upsertDataConfig(where: DataConfigWhereUniqueInput!, create: DataConfigCreateInput!, update: DataConfigUpdateInput!): DataConfig!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyOrganisations(data: OrganisationUpdateInput!, where: OrganisationWhereInput): BatchPayload!
   updateManyDocuments(data: DocumentUpdateInput!, where: DocumentWhereInput): BatchPayload!
   updateManySections(data: SectionUpdateInput!, where: SectionWhereInput): BatchPayload!
   updateManyDocumentConfigs(data: DocumentConfigUpdateInput!, where: DocumentConfigWhereInput): BatchPayload!
   updateManyTags(data: TagUpdateInput!, where: TagWhereInput): BatchPayload!
+  updateManyDataConfigs(data: DataConfigUpdateInput!, where: DataConfigWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   deleteManyOrganisations(where: OrganisationWhereInput): BatchPayload!
   deleteManyDocuments(where: DocumentWhereInput): BatchPayload!
   deleteManySections(where: SectionWhereInput): BatchPayload!
   deleteManyDocumentConfigs(where: DocumentConfigWhereInput): BatchPayload!
   deleteManyTags(where: TagWhereInput): BatchPayload!
+  deleteManyDataConfigs(where: DataConfigWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
@@ -755,6 +984,7 @@ type Organisation implements Node {
   name: String
   documents(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Document!]
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  dataConfigs(where: DataConfigWhereInput, orderBy: DataConfigOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DataConfig!]
 }
 
 """A connection to a list of items."""
@@ -771,6 +1001,7 @@ input OrganisationCreateInput {
   name: String
   documents: DocumentCreateManyWithoutCreatedForInput
   users: UserCreateManyWithoutOrganisationsInput
+  dataConfigs: DataConfigCreateManyWithoutOrganisationInput
 }
 
 input OrganisationCreateManyWithoutUsersInput {
@@ -778,19 +1009,32 @@ input OrganisationCreateManyWithoutUsersInput {
   connect: [OrganisationWhereUniqueInput!]
 }
 
+input OrganisationCreateOneWithoutDataConfigsInput {
+  create: OrganisationCreateWithoutDataConfigsInput
+  connect: OrganisationWhereUniqueInput
+}
+
 input OrganisationCreateOneWithoutDocumentsInput {
   create: OrganisationCreateWithoutDocumentsInput
   connect: OrganisationWhereUniqueInput
 }
 
+input OrganisationCreateWithoutDataConfigsInput {
+  name: String
+  documents: DocumentCreateManyWithoutCreatedForInput
+  users: UserCreateManyWithoutOrganisationsInput
+}
+
 input OrganisationCreateWithoutDocumentsInput {
   name: String
   users: UserCreateManyWithoutOrganisationsInput
+  dataConfigs: DataConfigCreateManyWithoutOrganisationInput
 }
 
 input OrganisationCreateWithoutUsersInput {
   name: String
   documents: DocumentCreateManyWithoutCreatedForInput
+  dataConfigs: DataConfigCreateManyWithoutOrganisationInput
 }
 
 """An edge in a connection."""
@@ -861,6 +1105,7 @@ input OrganisationUpdateInput {
   name: String
   documents: DocumentUpdateManyWithoutCreatedForInput
   users: UserUpdateManyWithoutOrganisationsInput
+  dataConfigs: DataConfigUpdateManyWithoutOrganisationInput
 }
 
 input OrganisationUpdateManyWithoutUsersInput {
@@ -872,6 +1117,15 @@ input OrganisationUpdateManyWithoutUsersInput {
   upsert: [OrganisationUpsertWithWhereUniqueWithoutUsersInput!]
 }
 
+input OrganisationUpdateOneWithoutDataConfigsInput {
+  create: OrganisationCreateWithoutDataConfigsInput
+  connect: OrganisationWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: OrganisationUpdateWithoutDataConfigsDataInput
+  upsert: OrganisationUpsertWithoutDataConfigsInput
+}
+
 input OrganisationUpdateOneWithoutDocumentsInput {
   create: OrganisationCreateWithoutDocumentsInput
   connect: OrganisationWhereUniqueInput
@@ -881,19 +1135,32 @@ input OrganisationUpdateOneWithoutDocumentsInput {
   upsert: OrganisationUpsertWithoutDocumentsInput
 }
 
+input OrganisationUpdateWithoutDataConfigsDataInput {
+  name: String
+  documents: DocumentUpdateManyWithoutCreatedForInput
+  users: UserUpdateManyWithoutOrganisationsInput
+}
+
 input OrganisationUpdateWithoutDocumentsDataInput {
   name: String
   users: UserUpdateManyWithoutOrganisationsInput
+  dataConfigs: DataConfigUpdateManyWithoutOrganisationInput
 }
 
 input OrganisationUpdateWithoutUsersDataInput {
   name: String
   documents: DocumentUpdateManyWithoutCreatedForInput
+  dataConfigs: DataConfigUpdateManyWithoutOrganisationInput
 }
 
 input OrganisationUpdateWithWhereUniqueWithoutUsersInput {
   where: OrganisationWhereUniqueInput!
   data: OrganisationUpdateWithoutUsersDataInput!
+}
+
+input OrganisationUpsertWithoutDataConfigsInput {
+  update: OrganisationUpdateWithoutDataConfigsDataInput!
+  create: OrganisationCreateWithoutDataConfigsInput!
 }
 
 input OrganisationUpsertWithoutDocumentsInput {
@@ -1002,6 +1269,9 @@ input OrganisationWhereInput {
   users_every: UserWhereInput
   users_some: UserWhereInput
   users_none: UserWhereInput
+  dataConfigs_every: DataConfigWhereInput
+  dataConfigs_some: DataConfigWhereInput
+  dataConfigs_none: DataConfigWhereInput
 }
 
 input OrganisationWhereUniqueInput {
@@ -1029,18 +1299,21 @@ type Query {
   sections(where: SectionWhereInput, orderBy: SectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Section]!
   documentConfigs(where: DocumentConfigWhereInput, orderBy: DocumentConfigOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DocumentConfig]!
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag]!
+  dataConfigs(where: DataConfigWhereInput, orderBy: DataConfigOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [DataConfig]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   organisation(where: OrganisationWhereUniqueInput!): Organisation
   document(where: DocumentWhereUniqueInput!): Document
   section(where: SectionWhereUniqueInput!): Section
   documentConfig(where: DocumentConfigWhereUniqueInput!): DocumentConfig
   tag(where: TagWhereUniqueInput!): Tag
+  dataConfig(where: DataConfigWhereUniqueInput!): DataConfig
   user(where: UserWhereUniqueInput!): User
   organisationsConnection(where: OrganisationWhereInput, orderBy: OrganisationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganisationConnection!
   documentsConnection(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentConnection!
   sectionsConnection(where: SectionWhereInput, orderBy: SectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SectionConnection!
   documentConfigsConnection(where: DocumentConfigWhereInput, orderBy: DocumentConfigOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DocumentConfigConnection!
   tagsConnection(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TagConnection!
+  dataConfigsConnection(where: DataConfigWhereInput, orderBy: DataConfigOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DataConfigConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
@@ -1343,6 +1616,7 @@ type Subscription {
   section(where: SectionSubscriptionWhereInput): SectionSubscriptionPayload
   documentConfig(where: DocumentConfigSubscriptionWhereInput): DocumentConfigSubscriptionPayload
   tag(where: TagSubscriptionWhereInput): TagSubscriptionPayload
+  dataConfig(where: DataConfigSubscriptionWhereInput): DataConfigSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
