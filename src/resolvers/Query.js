@@ -1,7 +1,12 @@
-const { APP_SECRET, getUserId } = require("../utils")
+const { APP_SECRET, getUserId, getOrgId } = require("../utils")
 
 function documentFeed(root, args, context, info) {
-  return context.db.query.documents({}, info)
+  // return context.db.query.documents({}, info)
+  const orgId = getOrgId(context)
+  return context.db.query.documents(
+    { where: { createdFor: { id: orgId } } },
+    info
+  )
 }
 
 function allUsers(root, args, context, info) {

@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const { APP_SECRET, getUserId } = require("../utils")
+const { APP_SECRET, getUserId, getOrgId } = require("../utils")
 
 async function signup(parent, args, context, info) {
   if (args.email.length < 3) {
@@ -53,12 +53,14 @@ async function login(parent, args, context, info) {
 
 function postDocument(parent, args, context, info) {
   const userId = getUserId(context)
+  const orgId = getOrgId(context)
   return context.db.mutation.createDocument(
     {
       data: {
         name: args.name,
         createdBy: { connect: { id: userId } },
-        createdFor: { connect: { id: args.orgId } },
+        createdFor: { connect: { id: orgId } },
+        // createdFor: { connect: { id: args.orgId } },
         // createdFor: { connect: { where: { id: args.createdFor } } },
         // createdFor: { connect: { where: { id: args.orgID } } },
         //createdFor: { connect: { id: args.createdFor } },
@@ -84,7 +86,7 @@ function postSection(parent, args, context, info) {
 }
 
 function postDataConfig(parent, args, context, info) {
-  const userId = getUserId(context)
+  const orgId = getOrgId(context)
   const camelName = args.name
     .replace(/\s(.)/g, function($1) {
       return $1.toUpperCase()
@@ -97,7 +99,9 @@ function postDataConfig(parent, args, context, info) {
     {
       data: {
         name: camelName,
-        organisation: { connect: { id: args.orgId } },
+        url: args.url,
+        params: args.params,
+        organisation: { connect: { id: orgId } },
       },
     },
     info

@@ -12,7 +12,16 @@ function getUserId(context) {
   throw new Error("Not authenticated")
 }
 
+function getOrgId(context) {
+  const orgId = context.request.get("orgID")
+  if (orgId) {
+    return orgId
+  }
+  throw new Error("No Organisation ID for request")
+}
+
 module.exports = {
   APP_SECRET,
   getUserId,
+  getOrgId,
 }

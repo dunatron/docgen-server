@@ -56,4 +56,6 @@ type DataConfig {
   id: ID! @unique
   organisation: Organisation @relation(name: "OrganisationDataConfigs")
   name: String!
+  url: String!
+  params: Json
 }

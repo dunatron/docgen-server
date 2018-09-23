@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/heath-dunlop-37e897/doc_gen_db/dev
-# timestamp: Thu Sep 20 2018 14:18:55 GMT+1200 (NZST)
+# timestamp: Fri Sep 21 2018 11:17:45 GMT+1200 (NZST)
 
 type AggregateDataConfig {
   count: Int!
@@ -38,6 +38,8 @@ type DataConfig implements Node {
   id: ID!
   organisation(where: OrganisationWhereInput): Organisation
   name: String!
+  url: String!
+  params: Json
 }
 
 """A connection to a list of items."""
@@ -52,6 +54,8 @@ type DataConfigConnection {
 
 input DataConfigCreateInput {
   name: String!
+  url: String!
+  params: Json
   organisation: OrganisationCreateOneWithoutDataConfigsInput
 }
 
@@ -62,6 +66,8 @@ input DataConfigCreateManyWithoutOrganisationInput {
 
 input DataConfigCreateWithoutOrganisationInput {
   name: String!
+  url: String!
+  params: Json
 }
 
 """An edge in a connection."""
@@ -78,6 +84,10 @@ enum DataConfigOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  url_ASC
+  url_DESC
+  params_ASC
+  params_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -87,6 +97,8 @@ enum DataConfigOrderByInput {
 type DataConfigPreviousValues {
   id: ID!
   name: String!
+  url: String!
+  params: Json
 }
 
 type DataConfigSubscriptionPayload {
@@ -130,6 +142,8 @@ input DataConfigSubscriptionWhereInput {
 
 input DataConfigUpdateInput {
   name: String
+  url: String
+  params: Json
   organisation: OrganisationUpdateOneWithoutDataConfigsInput
 }
 
@@ -144,6 +158,8 @@ input DataConfigUpdateManyWithoutOrganisationInput {
 
 input DataConfigUpdateWithoutOrganisationDataInput {
   name: String
+  url: String
+  params: Json
 }
 
 input DataConfigUpdateWithWhereUniqueWithoutOrganisationInput {
@@ -246,6 +262,46 @@ input DataConfigWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
   organisation: OrganisationWhereInput
 }
 

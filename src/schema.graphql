@@ -21,7 +21,7 @@ type Mutation {
   updateDocument(id: ID!, name: String): Document!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
-  postDataConfig(name: String!, orgId: ID!): DataConfig!
+  postDataConfig(name: String!, url: String!, params: Json): DataConfig!
 }
 
 # type Document {

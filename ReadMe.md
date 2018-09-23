@@ -375,6 +375,25 @@ name
 }
 ```
 
+###### get Documents for organisation
+
+```
+query {
+  documents(where:{
+    createdFor:{
+      id:"cjm1qmjnyailj0b05ns7uh04b"
+    }
+  }) {
+    id
+    name
+    createdFor {
+      id
+      name
+    }
+  }
+}
+```
+
 ## MUTATIONS
 
 ### App Mutations
@@ -590,17 +609,24 @@ name
 
 ```
 mutation {
-createDataConfig(data:{
-name:"Second"
-organisation: {
-connect:{
-id: "cjm1qmjnyailj0b05ns7uh04b"
-}
-}
-}) {
-id
-name
-}
+  createDataConfig(data: {
+    name:"Config Name Will camel case itself"
+    url:"http://theednpoint.com"
+    params: {
+      id: "agreementID",
+      orgId:"theOrgId"
+    }
+    organisation: {
+      connect :{
+        id: "cjm1qmjnyailj0b05ns7uh04b"
+      }
+    }
+  }) {
+    name
+    organisation {
+      name
+    }
+  }
 }
 ```
 
