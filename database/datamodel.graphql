@@ -37,6 +37,7 @@ type User {
   password: String!
   documents: [Document!]!
   organisations: [Organisation!]!
+  role: ROLE! @defaultValue(value: USER)
 }
 
 type DocumentConfig {
@@ -58,4 +59,9 @@ type DataConfig {
   name: String!
   url: String!
   params: Json
+}
+
+enum ROLE {
+  USER
+  ADMIN
 }
