@@ -291,6 +291,21 @@ query {
 }
 ```
 
+###### get users for the signed in organisation
+
+```
+query {
+  organisation {
+    users {
+      id
+      name
+      email
+
+    }
+  }
+}
+```
+
 ###### get Single Document
 
 ```
@@ -389,6 +404,22 @@ query {
     createdFor {
       id
       name
+    }
+  }
+}
+```
+
+###### DB: get all users for an organisation
+
+```
+query {
+  organisation(where: {id:"cjmig1mik19ss0b77bkb6ic7f"}) {
+    id
+    users {
+      name
+      id
+      email
+      role
     }
   }
 }
@@ -645,6 +676,45 @@ mutation {
   ) {
     id
     email
+    organisations {
+      id
+      name
+    }
+  }
+}
+```
+
+###### Create user with admin permissions
+
+```
+ mutation {
+  createUser(data:{
+    name:"Dunatron1",
+    email: "heath.dunlop.hd@gmail1.com",
+    password:"password",
+    role:ADMIN
+  }) {
+    name
+    role
+    email
+  }
+}
+```
+
+###### update users role to ADMIN
+
+```
+mutation {
+  updateUser(data:{
+    role: ADMIN
+  }
+  where:{
+    id:"cjmifpdq619100b771ap8gsg7"
+  }
+  ) {
+    id
+    email
+    role
     organisations {
       id
       name

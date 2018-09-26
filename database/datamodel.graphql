@@ -37,7 +37,7 @@ type User {
   password: String!
   documents: [Document!]!
   organisations: [Organisation!]!
-  role: ROLE! @defaultValue(value: USER)
+  role: ROLE! @default(value: "USER")
 }
 
 type DocumentConfig {

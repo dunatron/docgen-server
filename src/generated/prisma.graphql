@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/heath-dunlop-37e897/doc_gen_db/dev
-# timestamp: Fri Sep 21 2018 11:17:45 GMT+1200 (NZST)
+# timestamp: Wed Sep 26 2018 11:19:57 GMT+1200 (NZST)
 
 type AggregateDataConfig {
   count: Int!
@@ -36,7 +36,7 @@ type BatchPayload {
 
 type DataConfig implements Node {
   id: ID!
-  organisation(where: OrganisationWhereInput): Organisation
+  organisation: Organisation
   name: String!
   url: String!
   params: Json
@@ -315,9 +315,9 @@ type Document implements Node {
   id: ID!
   createdAt: DateTime!
   name: String
-  createdBy(where: UserWhereInput): User
-  createdFor(where: OrganisationWhereInput): Organisation
-  config(where: DocumentConfigWhereInput): DocumentConfig
+  createdBy: User
+  createdFor: Organisation
+  config: DocumentConfig
   tags(where: TagWhereInput, orderBy: TagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tag!]
   sections(where: SectionWhereInput, orderBy: SectionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Section!]
   shortCodes: Json
@@ -327,7 +327,7 @@ type DocumentConfig implements Node {
   id: ID!
   dataUrl: String
   params: Json
-  belongsTo(where: DocumentWhereInput): Document!
+  belongsTo: Document!
 }
 
 """A connection to a list of items."""
@@ -1379,11 +1379,16 @@ type Query {
   ): Node
 }
 
+enum ROLE {
+  USER
+  ADMIN
+}
+
 type Section implements Node {
   id: ID!
   createdAt: DateTime!
-  createdBy(where: UserWhereInput): User
-  belongsTo(where: DocumentWhereInput): Document
+  createdBy: User
+  belongsTo: Document
   type: String
   rawContent: Json
   position: Int
@@ -1905,6 +1910,7 @@ type User implements Node {
   password: String!
   documents(where: DocumentWhereInput, orderBy: DocumentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Document!]
   organisations(where: OrganisationWhereInput, orderBy: OrganisationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organisation!]
+  role: ROLE!
 }
 
 """A connection to a list of items."""
@@ -1921,6 +1927,7 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
+  role: ROLE
   documents: DocumentCreateManyWithoutCreatedByInput
   organisations: OrganisationCreateManyWithoutUsersInput
 }
@@ -1944,6 +1951,7 @@ input UserCreateWithoutDocumentsInput {
   name: String!
   email: String!
   password: String!
+  role: ROLE
   organisations: OrganisationCreateManyWithoutUsersInput
 }
 
@@ -1951,6 +1959,7 @@ input UserCreateWithoutOrganisationsInput {
   name: String!
   email: String!
   password: String!
+  role: ROLE
   documents: DocumentCreateManyWithoutCreatedByInput
 }
 
@@ -1972,6 +1981,8 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
+  role_ASC
+  role_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1983,6 +1994,7 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
+  role: ROLE!
 }
 
 type UserSubscriptionPayload {
@@ -2028,6 +2040,7 @@ input UserUpdateDataInput {
   name: String
   email: String
   password: String
+  role: ROLE
   documents: DocumentUpdateManyWithoutCreatedByInput
   organisations: OrganisationUpdateManyWithoutUsersInput
 }
@@ -2036,6 +2049,7 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  role: ROLE
   documents: DocumentUpdateManyWithoutCreatedByInput
   organisations: OrganisationUpdateManyWithoutUsersInput
 }
@@ -2071,6 +2085,7 @@ input UserUpdateWithoutDocumentsDataInput {
   name: String
   email: String
   password: String
+  role: ROLE
   organisations: OrganisationUpdateManyWithoutUsersInput
 }
 
@@ -2078,6 +2093,7 @@ input UserUpdateWithoutOrganisationsDataInput {
   name: String
   email: String
   password: String
+  role: ROLE
   documents: DocumentUpdateManyWithoutCreatedByInput
 }
 
@@ -2271,6 +2287,16 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  role: ROLE
+
+  """All values that are not equal to given value."""
+  role_not: ROLE
+
+  """All values that are contained in given list."""
+  role_in: [ROLE!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [ROLE!]
   documents_every: DocumentWhereInput
   documents_some: DocumentWhereInput
   documents_none: DocumentWhereInput

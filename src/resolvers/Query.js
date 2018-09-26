@@ -9,6 +9,11 @@ function documentFeed(root, args, context, info) {
   )
 }
 
+function organisation(root, args, context, info) {
+  const orgId = getOrgId(context)
+  return context.db.query.organisation({ where: { id: orgId } }, info)
+}
+
 function allUsers(root, args, context, info) {
   return context.db.query.users({}, info)
 }
@@ -42,6 +47,7 @@ function info(root, args, context, info) {
 }
 
 module.exports = {
+  organisation,
   allOrganisations,
   getUser,
   orgDataConfigs,

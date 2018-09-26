@@ -1,11 +1,12 @@
-# import Organisation, User, Document, Section, DocumentConfig from "./generated/prisma.graphql"
+# import Organisation, User, ROLE, Document, Section, DocumentConfig from "./generated/prisma.graphql"
 
 type Query {
   info: String!
   allOrganisations: [Organisation!]!
   documentFeed: [Document!]!
   singleDocument(id: ID!): Document
-  organisation(where: OrganisationWhereUniqueInput!): Organisation
+  organisation: Organisation
+  # organisation(where: OrganisationWhereUniqueInput!): Organisation
   orgDataConfigs(orgId: ID!): [DataConfig]!
   # document(where: DocumentWhereUniqueInput!): Document
   # singleDocument(where: DocumentWhereUniqueInput!): Document
@@ -40,4 +41,5 @@ type User {
   email: String!
   documents: [Document!]!
   organisations: [Organisation!]!
+  role: ROLE!
 }
