@@ -64,4 +64,5 @@ type DataConfig {
 enum ROLE {
   USER
   ADMIN
+  WIZARD
 }

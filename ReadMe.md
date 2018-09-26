@@ -483,6 +483,18 @@ You will need to include variables
 }
 ```
 
+###### Update User Role
+
+```
+mutation {
+  changeUserRole(id:"cjmifpdq619100b771ap8gsg7", role: ADMIN) {
+    name
+    id
+    role
+  }
+}
+```
+
 ### DB Mutations
 
 ###### create Organisation

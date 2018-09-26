@@ -108,10 +108,23 @@ function postDataConfig(parent, args, context, info) {
   )
 }
 
+function changeUserRole(parent, args, context, info) {
+  return context.db.mutation.updateUser(
+    {
+      data: {
+        role: args.role,
+      },
+      where: { id: args.id },
+    },
+    info
+  )
+}
+
 module.exports = {
   signup,
   login,
   postDocument,
   postSection,
   postDataConfig,
+  changeUserRole,
 }

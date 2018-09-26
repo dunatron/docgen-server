@@ -23,6 +23,7 @@ type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
   postDataConfig(name: String!, url: String!, params: Json): DataConfig!
+  changeUserRole(id: ID!, role: ROLE!): User!
 }
 
 # type Document {
