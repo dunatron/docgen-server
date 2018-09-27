@@ -24,6 +24,8 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload
   postDataConfig(name: String!, url: String!, params: Json): DataConfig!
   changeUserRole(id: ID!, role: ROLE!): User!
+  addOrgToUser(orgId: ID!, userId: ID!): User!
+  removeOrgFromUser(orgId: ID!, userId: ID!): User!
 }
 
 # type Document {

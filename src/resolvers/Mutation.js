@@ -119,6 +119,53 @@ function changeUserRole(parent, args, context, info) {
     info
   )
 }
+/**
+mutation {
+  updateUser(data:{
+    organisations:{
+      connect:{id: "cjm1qmjnyailj0b05ns7uh04b"}
+    }
+  }
+  where:{
+    id:"cjm1qpsuaaish0b05ortyisv4"
+  }
+  ) {
+    id
+    email
+    organisations {
+      id
+      name
+    }
+  }
+}
+ */
+function addOrgToUser(parent, args, context, info) {
+  return context.db.mutation.updateUser(
+    {
+      data: {
+        organisations: {
+          connect: { id: args.orgId },
+        },
+      },
+      where: { id: args.userId },
+    },
+    info
+  )
+}
+
+function removeOrgFromUser(parent, args, context, info) {
+  return context.db.mutation.updateUser(
+    {
+      data: {
+        organisations: {
+          disconnect: { id: args.orgId },
+        },
+      },
+      where: { id: args.userId },
+    },
+    info
+  )
+}
 
 module.exports = {
   signup,
@@ -127,4 +174,6 @@ module.exports = {
   postSection,
   postDataConfig,
   changeUserRole,
+  addOrgToUser,
+  removeOrgFromUser,
 }

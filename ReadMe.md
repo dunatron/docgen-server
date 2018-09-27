@@ -380,13 +380,13 @@ query {
 
 ```
 query {
-dataConfigs(where:{organisation:{id: "cjm1qmjnyailj0b05ns7uh04b"}}) {
-id
-name
-organisation {
-name
-}
-}
+  dataConfigs(where:{organisation:{id: "cjm1qmjnyailj0b05ns7uh04b"}}) {
+    id
+    name
+    organisation {
+      name
+    }
+  }
 }
 ```
 
@@ -436,18 +436,18 @@ query {
 
 ```
 mutation PostMutation($name:String!){
-postDocument(name: $name, orgId: "cjm14c2tc8xgx0b05cc5xrp51") {
-name
-createdAt
-createdFor {
-name
-}
-createdBy {
-email
-name
-id
-}
-}
+  postDocument(name: $name, orgId: "cjm14c2tc8xgx0b05cc5xrp51") {
+    name
+    createdAt
+    createdFor {
+      name
+    }
+    createdBy {
+      email
+      name
+      id
+    }
+  }
 }
 ```
 
@@ -455,12 +455,12 @@ id
 
 ```
 mutation {
-signup(email: "testuser@test.com" name:"Test User" password:"test123") {
-user {
-id
-name
-}
-}
+  signup(email: "testuser@test.com" name:"Test User" password:"test123") {
+    user {
+      id
+      name
+    }
+  }
 }
 ```
 
@@ -468,9 +468,9 @@ name
 
 ```
 mutation LoginMutation($email: String!, $password: String!) {
-login(email: $email, password: $password) {
-token
-}
+  login(email: $email, password: $password) {
+    token
+  }
 }
 ```
 
@@ -478,8 +478,8 @@ You will need to include variables
 
 ```
 {
-"email": "testuser@test.com",
-"password": "test123"
+  "email": "testuser@test.com",
+  "password": "test123"
 }
 ```
 
@@ -495,6 +495,21 @@ mutation {
 }
 ```
 
+###### add organisation to user
+
+```
+mutation {
+  addOrgToUser(orgId:"cjmig6ijb1a4s0b776zri310s", userId:"cjmipdyfe1vn70b77vwjvnf71") {
+    id
+    email
+    organisations {
+      name
+      id
+    }
+  }
+}
+```
+
 ### DB Mutations
 
 ###### create Organisation
@@ -503,12 +518,12 @@ Note: currently on a db/server function. i.e the client app cannot create an org
 
 ```
 mutation {
-createOrganisation(data:{
-name: "Insert Organisation Name"
+  createOrganisation(data:{
+  name: "Insert Organisation Name"
 }) {
-name
-id
-}
+    name
+    id
+  }
 }
 ```
 
@@ -516,20 +531,20 @@ id
 
 ```
 mutation {
-createUser(data:{
-name:"Heath"
-email:"heath.dunlop.hd@gmail.com"
-password:"password123"
-organisations:{
-connect:{
-id: "cjm1ckgh59fjt0b05y658miof"
-}
-}
+  createUser(data:{
+    name:"Heath"
+    email:"heath.dunlop.hd@gmail.com"
+    password:"password123"
+    organisations:{
+    connect:{
+      id: "cjm1ckgh59fjt0b05y658miof"
+    }
+  }
 }) {
-id
-email
-name
-}
+    id
+    email
+    name
+  }
 }
 ```
 
@@ -537,12 +552,12 @@ name
 
 ```
 mutation {
-createTag (data:{
-name: "Lease"
-}){
-id
-name
-}
+  createTag (data:{
+  name: "Lease"
+  }){
+    id
+    name
+  }
 }
 ```
 
@@ -550,36 +565,36 @@ name
 
 ```
 mutation {
-createDocument(data: {
-name: "Here is the First Document For Nomos"
-createdBy:{
-connect: {
-id:"cjm1cwasd9gdn0b05ur3ev17g"
-}
-}
-tags:{
-connect:{
-id:"cjm1dcfkb9hef0b05ub7ildcd"
-}
-}
-createdFor:{
-connect:{
-id:"cjm1ckgh59fjt0b05y658miof"
-}
-}
+  createDocument(data: {
+  name: "Here is the First Document For Nomos"
+  createdBy:{
+    connect: {
+      id:"cjm1cwasd9gdn0b05ur3ev17g"
+    }
+  }
+  tags:{
+    connect:{
+      id:"cjm1dcfkb9hef0b05ub7ildcd"
+    }
+  }
+  createdFor:{
+    connect:{
+      id:"cjm1ckgh59fjt0b05y658miof"
+    }
+  }
 }) {
-name
-id
-tags {
-id
-name
-}
-sections {
-id
-type
-rawContent
-}
-}
+    name
+    id
+    tags {
+      id
+      name
+    }
+    sections {
+      id
+      type
+      rawContent
+    }
+  }
 }
 ```
 
@@ -587,35 +602,33 @@ rawContent
 
 ```
 mutation {
-createDocument(data: {
-name: "Here is the First Document For Nomos"
-createdBy:{
-connect: {
-id:"cjm1qpsuaaish0b05ortyisv4"
-}
-}
-shortCodes:"{\"int\": 1, \"string\": \"value\"}"
-createdFor:{
-connect:{
-id:"cjm1qmjnyailj0b05ns7uh04b"
-}
-}
-}) {
-name
-id
-shortCodes
-tags {
-id
-name
-}
-sections {
-id
-type
-rawContent
-
+  createDocument(data: {
+    name: "Here is the First Document For Nomos"
+    createdBy:{
+    connect: {
+      id:"cjm1qpsuaaish0b05ortyisv4"
     }
-
-}
+  }
+  shortCodes:"{\"int\": 1, \"string\": \"value\"}"
+  createdFor:{
+    connect:{
+      id:"cjm1qmjnyailj0b05ns7uh04b"
+    }
+  }
+}) {
+    name
+    id
+    shortCodes
+    tags {
+      id
+      name
+   }
+    sections {
+      id
+      type
+      rawContent
+    }
+  }
 }
 ```
 
@@ -623,28 +636,28 @@ rawContent
 
 ```
 mutation {
-createSection(data: {
-createdBy:{
-connect: {
-id: "cjm1cwasd9gdn0b05ur3ev17g"
-}
-}
-belongsTo:{
-connect:{
-id: "cjm1dhf879hod0b05djdyqtzq"
-}
-}
-type:"h1"
-rawContent:"{\"int\": 1, \"string\": \"value\"}"
-}) {
-id
-type
-rawContent
-belongsTo {
-id
-name
-}
-}
+  createSection(data: {
+  createdBy:{
+    connect: {
+      id: "cjm1cwasd9gdn0b05ur3ev17g"
+    }
+  }
+  belongsTo:{
+    connect:{
+      id: "cjm1dhf879hod0b05djdyqtzq"
+    }
+  }
+  type:"h1"
+  rawContent:"{\"int\": 1, \"string\": \"value\"}"
+  }) {
+    id
+    type
+    rawContent
+    belongsTo {
+      id
+      name
+    }
+  }
 }
 ```
 
@@ -674,6 +687,8 @@ mutation {
 ```
 
 ###### add user to organisation
+
+Note: if you were to disconnect this relationship you can simply changes the `connect` nested inside the organisations to a `disconnect` 😎
 
 ```
 mutation {
