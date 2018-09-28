@@ -750,6 +750,21 @@ mutation {
 }
 ```
 
+###### Update Section
+
+```
+mutation {
+  updateSection(where: {id:"cjml31k6m92lr0b77rd2msz0s"}, data:{
+    position: 6,
+    rawContent: "\"This is something like the holocuast\"",
+  }) {
+    id
+    position
+    rawContent
+  }
+}
+```
+
 ## SUBSCRIPTIONS
 
 ### App Subscriptions

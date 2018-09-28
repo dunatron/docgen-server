@@ -167,6 +167,19 @@ function removeOrgFromUser(parent, args, context, info) {
   )
 }
 
+function updateSection(parent, args, context, info) {
+  return context.db.mutation.updateSection(
+    {
+      data: {
+        position: 6,
+        rawContent: args.rawContent,
+      },
+      where: { id: args.sectionId },
+    },
+    info
+  )
+}
+
 module.exports = {
   signup,
   login,
@@ -176,4 +189,5 @@ module.exports = {
   changeUserRole,
   addOrgToUser,
   removeOrgFromUser,
+  updateSection,
 }
