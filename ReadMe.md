@@ -17,6 +17,11 @@ Something to shape how we get this data
 
 - [GraphQL](https://graphql.org/) Will be used as it will allow us to scale our application with speed and maximum flexibility
 - [Prisma Server](https://www.prisma.io/) Will be used for our GraphQL backend. Prisma makes working with databases easy through the simplicity of GraphQL. We are able to easily construct our database model through a schema and on to of that is a layer where we can add our business logic when certain queries are called
+- More On Prisma - Prisma automates a lot of the backend code you’d write to query a database like mysql and allowing you to query it all using GraphQL. Prisma runs a GraphQL server (automatically) to do this.
+  It’s up to you then to build another GraphQL server that queries the Prisma GraphQL server. At this point you can use tools like apollo-server 61 or graphql-yoga 189 (graphql-yoga actually uses apollo-server under the hood and provides some extra features that make it nice to work with).
+
+The third component here would be using something like apollo-client 19 in your frontend application/website to query the custom GraphQL server you make.
+
 - [Apollo Client](https://www.apollographql.com/docs/react/) It is simply the best way to use GraphL for our front end. This works best with Libraries such as ReactJS
 - [ReactJS](https://reactjs.org/) ReactJS is simply the best Library for building user interfaces.
 
