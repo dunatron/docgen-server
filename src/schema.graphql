@@ -21,6 +21,7 @@ type Mutation {
   postSection(type: String, belongsTo: ID): Section!
   # updateSection(data: SectionUpdateInput!, where: SectionWhereUniqueInput!): Section
   updateSection(rawContent: Json, sectionId: ID!): Section
+  updateSectionPosition(position: Int, sectionId: ID!): Section
   updateDocument(id: ID!, name: String): Document!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload

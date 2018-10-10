@@ -430,6 +430,19 @@ query {
 }
 ```
 
+###### DB: get documents with sections ordered by position
+
+```
+query {
+  documents{
+    sections(orderBy:position_ASC){
+      id
+      position
+    }
+  }
+}
+```
+
 ## MUTATIONS
 
 ### App Mutations

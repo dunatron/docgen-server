@@ -180,6 +180,18 @@ function updateSection(parent, args, context, info) {
   )
 }
 
+function updateSectionPosition(parent, args, context, info) {
+  return context.db.mutation.updateSection(
+    {
+      data: {
+        position: args.position,
+      },
+      where: { id: args.sectionId },
+    },
+    info
+  )
+}
+
 function deleteSection(parent, args, context, info) {
   return context.db.mutation.deleteSection(
     {
@@ -199,5 +211,6 @@ module.exports = {
   addOrgToUser,
   removeOrgFromUser,
   updateSection,
+  updateSectionPosition,
   deleteSection,
 }
