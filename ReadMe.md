@@ -770,6 +770,16 @@ mutation {
 }
 ```
 
+###### DB: Delete Section
+
+```
+mutation deleteSection($sectionId:ID!){
+  deleteSection(where: {id: $sectionId}) {
+    id
+  }
+}
+```
+
 ## SUBSCRIPTIONS
 
 ### App Subscriptions

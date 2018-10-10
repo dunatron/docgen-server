@@ -180,6 +180,15 @@ function updateSection(parent, args, context, info) {
   )
 }
 
+function deleteSection(parent, args, context, info) {
+  return context.db.mutation.deleteSection(
+    {
+      where: { id: args.sectionId },
+    },
+    info
+  )
+}
+
 module.exports = {
   signup,
   login,
@@ -190,4 +199,5 @@ module.exports = {
   addOrgToUser,
   removeOrgFromUser,
   updateSection,
+  deleteSection,
 }

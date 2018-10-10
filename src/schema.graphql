@@ -28,6 +28,7 @@ type Mutation {
   changeUserRole(id: ID!, role: ROLE!): User!
   addOrgToUser(orgId: ID!, userId: ID!): User!
   removeOrgFromUser(orgId: ID!, userId: ID!): User!
+  deleteSection(sectionId: ID!): Section!
 }
 
 # type Document {
